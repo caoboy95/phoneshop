@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 //            .setExitAnim(R.anim.exit_left)
 //            .setLaunchSingleTop(true)
 //            .build()
-        //test branch
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
