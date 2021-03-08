@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="customer"
+            type="com.example.testapp.data.db.entities.Customer" />
+    </data>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bill.CheckBillFragment"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:background="@color/background_gray">
+
+        <TextView
+            android:id="@+id/text_view_check_bill_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông Tin Khách Hàng"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/text_view_check_bill_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_check_bill_title"
+            android:text="@{customer.name}"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_view_check_bill_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_check_bill_name"
+            android:text="@{customer.gender}"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_view_check_bill_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_check_bill_gender"
+            android:text="@{customer.email}"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_view_check_bill_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_check_bill_email"
+            android:text="@{customer.phone_number}"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_view_check_bill_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_check_bill_phone"
+            android:text="@{customer.address}"
+            android:textSize="15sp" />
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_check_bill_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/check_bill_item_adapter"
+        />
+
+</LinearLayout>
+</layout>

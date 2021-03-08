@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+        <data>
+                <variable
+                    name="address"
+                    type="com.example.testapp.data.db.entities.AddressCustomer" />
+        </data>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_view_customer_name"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:text="@{address.name}"
+            android:hint="Tên"
+            android:textSize="22sp"
+            android:textColor="#3C3C3C" />
+        <TextView
+            android:id="@+id/text_view_customer_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Giới Tính"
+            android:text="@{address.gender}"
+            android:textSize="15sp"
+            android:layout_below="@id/text_view_customer_name"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="5sp"/>
+        <TextView
+            android:id="@+id/text_view_customer_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{address.phone}"
+            android:hint="0905003225"
+            android:textSize="15sp"
+            android:layout_below="@id/text_view_customer_gender"/>
+        <TextView
+            android:id="@+id/text_view_customer_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{address.email}"
+            android:hint="customer@gmail.com"
+            android:textSize="15sp"
+            android:layout_below="@id/text_view_customer_phone"/>
+        <TextView
+            android:id="@+id/text_view_customer_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{address.address}"
+            android:hint="123 Lê Duẩn"
+            android:textSize="15sp"
+            android:layout_below="@id/text_view_customer_email"/>
+</merge>
+</layout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="150sp"
+        android:layout_height="100sp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rootLayout"
+        android:layout_width="150sp"
+        android:layout_height="100sp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        android:layout_centerInParent="true">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10sp">
+        <RadioButton
+            android:id="@+id/radio_button_select_variant"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5sp"
+            />
+        <TextView
+            android:id="@+id/text_view_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phiên bản"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:layout_below="@id/radio_button_select_variant"
+            />
+        <TextView
+            android:id="@+id/text_view_price"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:hint="1.000.000đ"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:layout_below="@id/text_view_version"
+            />
+    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>

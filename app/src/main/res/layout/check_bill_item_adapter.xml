@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="10sp"
+        app:cardElevation="1sp"
+        app:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp">
+            <TextView
+                android:id="@+id/text_view_check_bill_item_id"
+                style="@style/InformationTextView"
+                android:text="#21"/>
+            <TextView
+                android:id="@+id/text_view_check_bill_title_date"
+                style="@style/InformationTextView"
+                android:text="Ngày Đặt:"
+                android:layout_below="@id/text_view_check_bill_item_id"/>
+            <TextView
+                android:id="@+id/text_view_check_bill_item_date"
+                style="@style/InformationTextView"
+                android:text="20/10/2020"
+                android:layout_below="@id/text_view_check_bill_item_id"
+                android:layout_marginStart="74sp"
+                />
+            <TextView
+                android:id="@+id/text_view_check_bill_title_quantity"
+                style="@style/InformationTextView"
+                android:text="Số Lượng:"
+                android:layout_below="@id/text_view_check_bill_title_date"/>
+            <TextView
+                android:id="@+id/text_view_check_bill_item_quantity"
+                style="@style/InformationTextView"
+                android:text="10"
+                android:layout_below="@id/text_view_check_bill_title_date"
+                android:layout_marginStart="74sp"
+                />
+            <TextView
+                android:id="@+id/text_view_check_bill_title_total"
+                style="@style/InformationTextView"
+                android:text="Tổng Tiền:"
+                android:layout_below="@id/text_view_check_bill_title_quantity"/>
+            <TextView
+                android:id="@+id/text_view_check_bill_item_total"
+                style="@style/InformationTextView"
+                android:text="100.000.000đ"
+                android:layout_below="@id/text_view_check_bill_title_quantity"
+                android:layout_marginStart="74sp"
+                />
+            <TextView
+                android:id="@+id/text_view_check_bill_item_status"
+                android:gravity="center"
+                android:padding="5sp"
+                android:layout_width="130sp"
+                android:layout_height="wrap_content"
+                android:text="Chưa Giao Hàng"
+                android:layout_marginBottom="10sp"
+                android:background="@color/undelivery"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/text_view_check_bill_item_id"
+                android:layout_marginStart="74sp"/>
+            <Button
+                android:id="@+id/button_check_bill_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:text="Chi Tiết"
+                android:textSize="10sp"
+                android:background="@drawable/button_custom"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/text_view_check_bill_item_status"
+                android:layout_marginBottom="2sp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

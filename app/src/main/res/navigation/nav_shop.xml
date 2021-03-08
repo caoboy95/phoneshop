@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_shop"
+    app:startDestination="@id/productFragment">
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.example.testapp.ui.product.ProductFragment"
+        android:label="Sản Phẩm"
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/startDetailFragment"
+            app:destination="@id/detailFragment2"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/productFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment2"
+        android:name="com.example.testapp.ui.product.detail.DetailFragment"
+        android:label="Chi Tiết Sản Phẩm"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.testapp.ui.profile.ProfileFragment"
+        android:label="Trang Cá Nhân" />
+    <fragment
+        android:id="@+id/billFragment"
+        android:name="com.example.testapp.ui.bill.BillFragment"
+        android:label="Lịch Sử Đơn Hàng"
+        tools:layout="@layout/fragment_bill" >
+        <action
+            android:id="@+id/action_billFragment_to_checkBillFragment"
+            app:destination="@id/checkBillFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/billFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.testapp.ui.setting.SettingFragment"
+        android:label="Cài Đặt"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.testapp.ui.cart.CartFragment"
+        android:label="Giỏ Hàng" >
+        <action
+            android:id="@+id/action_cartFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/cartFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.example.testapp.ui.cart.checkout.CheckOutFragment"
+        android:label="Đặt Hàng" >
+        <action
+            android:id="@+id/action_checkOutFragment_to_addressFragment"
+            app:destination="@id/addressFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/checkOutFragment" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_checkOutNotifyFragment"
+            app:destination="@id/checkOutNotifyFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/productFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.testapp.ui.cart.checkout.address.AddressFragment"
+        android:label="Thông Tin Giao Hàng" >
+        <action
+            android:id="@+id/action_addressFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/addressFragment" />
+        <action
+            android:id="@+id/action_addressFragment_to_editAddressFragment"
+            app:destination="@id/editAddressFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/addressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.example.testapp.ui.cart.checkout.address.AddAddressFragment"
+        android:label="Thêm Địa Chỉ" />
+    <fragment
+        android:id="@+id/editAddressFragment"
+        android:name="com.example.testapp.ui.cart.checkout.address.EditAddressFragment"
+        android:label="Sửa Địa Chỉ" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutNotifyFragment"
+        android:name="com.example.testapp.ui.cart.checkout.CheckOutNotifyFragment"
+        android:label="Đơn Hàng Đã Được Đặt" >
+        <argument
+            android:name="idBill"
+            app:argType="integer" />
+        <argument
+            android:name="cartAndAddress"
+            app:argType="com.example.testapp.data.db.entities.CartAndAddress" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkBillFragment"
+        android:name="com.example.testapp.ui.bill.CheckBillFragment"
+        android:label="Thông Tin Đơn Hàng" >
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_checkBillFragment_to_checkBillDetailFragment"
+            app:destination="@id/checkBillDetailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/exit_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/exit_right"
+            app:popUpTo="@id/checkBillFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkBillDetailFragment"
+        android:name="com.example.testapp.ui.bill.detail.CheckBillDetailFragment"
+        android:label="Chi Tiết Đơn Hàng" >
+        <argument
+            android:name="bill"
+            app:argType="com.example.testapp.data.db.entities.Bill" />
+    </fragment>
+</navigation>

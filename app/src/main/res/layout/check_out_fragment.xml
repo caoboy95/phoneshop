@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.cart.checkout.CheckOutFragment">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_bottom">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/relative_layout_shipping_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="40sp"
+                android:paddingRight="30sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp"
+                android:background="#EFEFEF">
+                <include
+                    android:id="@+id/layout_address_info"
+                    layout="@layout/address_info_layout" />
+                <Button
+                    android:id="@+id/button_edit_shipping_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sửa"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relative_layout_cart_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relative_layout_shipping_info"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_cart_item_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/cart_item_adapter"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_alignParentBottom="true"
+        android:background="#E6E6E6"
+        android:paddingTop="10sp"
+        android:paddingBottom="0sp"
+        android:paddingLeft="15sp"
+        android:paddingRight="15sp">
+
+        <TextView
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:text="Tổng Tiền:"
+            android:textSize="20sp"
+            android:layout_marginTop="5sp"
+            />
+        <TextView
+            android:id="@+id/text_view_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="1000000000đ"
+            android:text="1000000000đ"
+            android:textSize="20sp"
+            android:layout_marginTop="5sp"
+            android:layout_alignParentEnd="true"
+            />
+        <Button
+            android:id="@+id/button_order"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:text="Đặt Hàng"
+            android:textSize="18sp"
+            android:background="@drawable/button_custom"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10sp"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
+</layout>
