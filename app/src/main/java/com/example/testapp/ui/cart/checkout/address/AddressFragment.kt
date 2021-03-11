@@ -16,7 +16,7 @@ import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
 
-class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,AddressRepository>(){
+class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,AddressRepository>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,7 +29,7 @@ class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,Add
         })
     }
 
-    fun updateUI(address: List<AddressCustomer>){
+    fun updateUI(address: List<AddressCustomer>) {
         initRecyclerView(address)
     }
 
@@ -45,11 +45,10 @@ class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,Add
         return super.onOptionsItemSelected(item)
     }
 
-    fun initRecyclerView(address: List<AddressCustomer>)
-    {
+    fun initRecyclerView(address: List<AddressCustomer>) {
         var mAdapter = AddressInfoAdapter()
         mAdapter.setData(address)
-        mAdapter.setOnClickListener(object : AddressInfoAdapter.AddressClickListener{
+        mAdapter.setOnClickListener(object : AddressInfoAdapter.AddressClickListener {
             override fun onEditClickListener(id: Int) {
                 this@AddressFragment.view?.findNavController()?.navigate(AddressFragmentDirections.actionAddressFragmentToEditAddressFragment(id))
             }

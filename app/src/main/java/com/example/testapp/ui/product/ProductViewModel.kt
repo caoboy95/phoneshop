@@ -31,8 +31,8 @@ class ProductViewModel(
         getProducts()
     }
 
-    fun getProducts() =viewModelScope.launch {
-        _products.value= Resource.Loading
+    fun getProducts() = viewModelScope.launch {
+        _products.value = Resource.Loading
         _products.value = reposiroty.getProduct()
     }
 

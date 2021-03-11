@@ -10,6 +10,7 @@ import com.example.testapp.R
 import com.example.testapp.data.db.entities.Bill
 import com.example.testapp.data.db.entities.BillAndQuantity
 import com.example.testapp.databinding.CheckBillItemAdapterBinding
+import com.example.testapp.ui.formatCurrency
 import java.text.NumberFormat
 import java.util.*
 
@@ -18,19 +19,19 @@ class CheckBillAdapter : RecyclerView.Adapter<CheckBillAdapter.CheckBillViewHold
     private lateinit var clickListener: BillClickListener
     private lateinit var billAndQuantity: List<BillAndQuantity>
 
-    fun setData(billAndQuantity: List<BillAndQuantity>){
+    fun setData(billAndQuantity: List<BillAndQuantity>) {
         this.billAndQuantity =  billAndQuantity
         notifyDataSetChanged()
     }
 
-    class CheckBillViewHolder(val binding: CheckBillItemAdapterBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(billAndQuantity: BillAndQuantity,clickListener: BillClickListener){
-            binding.textViewCheckBillItemId.text = ("#"+billAndQuantity.bill.id)
-            binding.textViewCheckBillItemDate.text= billAndQuantity.bill.date_order
-            binding.textViewCheckBillItemTotal.text=NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(billAndQuantity.bill.total)
-            binding.textViewCheckBillItemQuantity.text= billAndQuantity.quantity.toString()
+    class CheckBillViewHolder(val binding: CheckBillItemAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(billAndQuantity: BillAndQuantity, clickListener: BillClickListener) {
+            binding.textViewCheckBillItemId.text = ("#${billAndQuantity.bill.id}")
+            binding.textViewCheckBillItemDate.text = billAndQuantity.bill.date_order
+            binding.textViewCheckBillItemTotal.text = formatCurrency(billAndQuantity.bill.total)
+            binding.textViewCheckBillItemQuantity.text = billAndQuantity.quantity.toString()
 
-            binding.textViewCheckBillItemStatus.text = when(billAndQuantity.bill.status){
+            binding.textViewCheckBillItemStatus.text = when(billAndQuantity.bill.status) {
                 0 -> {
                     binding.textViewCheckBillItemStatus.setBackgroundColor(Color.parseColor("#D3A419"))
                     "Chưa Giao Hàng" }
@@ -50,21 +51,21 @@ class CheckBillAdapter : RecyclerView.Adapter<CheckBillAdapter.CheckBillViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckBillViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding : CheckBillItemAdapterBinding = CheckBillItemAdapterBinding.inflate(inflater,parent,false)
+        val binding : CheckBillItemAdapterBinding = CheckBillItemAdapterBinding.inflate(inflater, parent, false)
         return CheckBillViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CheckBillViewHolder, position: Int) {
-        holder.bind(billAndQuantity[position],clickListener)
+        holder.bind(billAndQuantity[position], clickListener)
     }
 
-    override fun getItemCount()= billAndQuantity.size
+    override fun getItemCount() = billAndQuantity.size
 
-    fun setOnBillClickListener(clickListener: BillClickListener){
+    fun setOnBillClickListener(clickListener: BillClickListener) {
         this.clickListener = clickListener
     }
 
-    interface BillClickListener{
+    interface BillClickListener {
         fun onBillClickListener(bill: Bill)
     }
 }

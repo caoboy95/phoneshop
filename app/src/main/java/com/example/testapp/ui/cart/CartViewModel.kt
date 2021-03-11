@@ -23,7 +23,7 @@ class CartViewModel(
         getCartFromDatabase()
     }
 
-    fun getCartFromDatabase(){
+    fun getCartFromDatabase() {
         viewModelScope.launch {
             _cart.postValue(repository.getCartFromDatabase())
         }

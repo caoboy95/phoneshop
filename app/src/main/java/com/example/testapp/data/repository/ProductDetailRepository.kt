@@ -20,6 +20,7 @@ class ProductDetailRepository(
             db.getProductDao().getProductItem(id)
         }
     }
+
     suspend fun getProductDetailFromApi(id: Int) = safeApiCall { api.getProductDetail(id) }
 
     suspend fun getProductVariantsFromApi(id_product: Int) = safeApiCall { api.getProductVariants(id_product) }
@@ -35,15 +36,13 @@ class ProductDetailRepository(
                     }
                     cart.addToCart(productVariant, promotionPrice, 1)
                     db.getCartDao().insertCart(cart)
-                    "Đã Thêm Vào Giỏ Hàng"
+                    return@withContext "Đã Thêm Vào Giỏ Hàng"
                 }
-                else
-                    "Sản Phẩm Đã Hết Hàng"
+                "Sản Phẩm Đã Hết Hàng"
             } catch (e: Exception) {
                 e.toString()
             }
         }
     }
-
 
 }

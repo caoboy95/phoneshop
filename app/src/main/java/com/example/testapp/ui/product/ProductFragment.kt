@@ -24,7 +24,7 @@ import com.example.testapp.ui.visible
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 
-class ProductFragment : BaseFragment<ProductViewModel,FragmentProductBinding,ProductRepository>() {
+class ProductFragment : BaseFragment<ProductViewModel, FragmentProductBinding, ProductRepository>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +45,7 @@ class ProductFragment : BaseFragment<ProductViewModel,FragmentProductBinding,Pro
                     this.handleApiError(it)
                     Coroutines.main {
                         viewModel.productFromRoom.await().observe(viewLifecycleOwner, Observer {
-                            if(it!=null){
+                            if(it != null){
                                 bindUI(it)
                             }
                         })
@@ -58,7 +58,7 @@ class ProductFragment : BaseFragment<ProductViewModel,FragmentProductBinding,Pro
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.cart_menu,menu)
+        inflater.inflate(R.menu.cart_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -70,17 +70,18 @@ class ProductFragment : BaseFragment<ProductViewModel,FragmentProductBinding,Pro
             .setLaunchSingleTop(true)
             .build()
         when(item.itemId){
-            R.id.menu_item_cart -> this.view?.findNavController()?.navigate(R.id.cartFragment,null,navOptions)
+            R.id.menu_item_cart -> this.view?.findNavController()?.navigate(R.id.cartFragment, null, navOptions)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun bindUI(products: List<Product>){
+    fun bindUI(products: List<Product>) {
         binding.progressBar.isVisible(false)
 //            Toast.makeText(requireContext(), it.size.toString(), Toast.LENGTH_SHORT).show()
         initRecyclerView(products.toProductItem())
         products.toProductItem()
     }
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -88,27 +89,24 @@ class ProductFragment : BaseFragment<ProductViewModel,FragmentProductBinding,Pro
 
     override fun getViewModel() = ProductViewModel::class.java
 
-    override fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor)= ProductRepository(remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor),db,prefs)
+    override fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor) =
+            ProductRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), db, prefs)
 
     private fun initRecyclerView(productItem: List<ProductItem>) {
-
         val mAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(productItem)
         }
-
         binding.recyclerViewProducts.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = mAdapter
         }
-
     }
 
-
-    private fun List<Product>.toProductItem() : List<ProductItem>{
+    private fun List<Product>.toProductItem() : List<ProductItem> {
         return this.map{
             ProductItem(it).also {
-                it.setOnProductClickListener(object :ProductItem.ClickListener{
+                it.setOnProductClickListener(object :ProductItem.ClickListener {
                     override fun onItemClick(v: View, product: Product) {
                         v.snackbar("Nothing")
                     }

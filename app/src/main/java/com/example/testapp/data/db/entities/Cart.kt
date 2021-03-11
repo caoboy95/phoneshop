@@ -22,7 +22,7 @@ data class Cart(
 ):Parcelable
 {
 //    constructor(cart: Cart) : this(cart.id,cart.items,cart.totalQty,cart.totalPrice)
-    fun addToCart(item: ProductVariantWithImage,promotionPrice:Int,qty: Int){
+    fun addToCart(item: ProductVariantWithImage,promotionPrice:Int,qty: Int) {
 //        val price = (item.productVariant.unit_price*(100-promotionPrice))/100
         val price = item.productVariant.unit_price*80/100
         var cartItem : CartItem
@@ -59,7 +59,8 @@ data class Cart(
         }
 
     }
-    fun removeItemFromCart(item: ProductVariantWithImage){
+
+    fun removeItemFromCart(item: ProductVariantWithImage) {
         var cartItem : CartItem
         if(this.items!=null)
         {//if cart has nothing
@@ -78,7 +79,7 @@ data class Cart(
         }
     }
 }
-
+// use converter to store data to database as object type
 class CartItemsConverters {
         @TypeConverter
         fun fromCartItemsJson(stat: CartItems?): String {

@@ -29,7 +29,7 @@ class BillFragment : BaseFragment<BillViewModel, FragmentBillBinding, BillReposi
         container: ViewGroup?
     ): FragmentBillBinding = FragmentBillBinding.inflate(inflater,container,false)
 
-    override fun getViewModel()= BillViewModel::class.java
+    override fun getViewModel() = BillViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): BillRepository =
         BillRepository()

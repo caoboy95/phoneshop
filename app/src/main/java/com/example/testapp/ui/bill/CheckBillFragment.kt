@@ -26,15 +26,13 @@ import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.handleApiError
 import com.example.testapp.ui.visible
 
-class CheckBillFragment : BaseFragment<CheckBillViewModel,CheckBillFragmentBinding,CheckBillRepository>() {
+class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBinding, CheckBillRepository>() {
 
     val safeArgs : CheckBillFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(safeArgs.phone != null ){
-            viewModel.setData(safeArgs.phone)
-        }
+        viewModel.setData(safeArgs.phone)
 //        this.view?.snackbar(safeArgs.phone)
         viewModel.bills.observe(viewLifecycleOwner, Observer {
             when(it){
@@ -52,14 +50,14 @@ class CheckBillFragment : BaseFragment<CheckBillViewModel,CheckBillFragmentBindi
         })
     }
 
-    fun updateUI(billsWithCustomer: BillsWithCustomer){
+    fun updateUI(billsWithCustomer: BillsWithCustomer) {
         binding.customer= billsWithCustomer.customer
         initRecyclerView(billsWithCustomer.billAndQuantity)
     }
 
-    fun initRecyclerView(billAndQuantity: List<BillAndQuantity>){
+    fun initRecyclerView(billAndQuantity: List<BillAndQuantity>) {
         val mAdapter = CheckBillAdapter()
-        mAdapter.setOnBillClickListener(object : CheckBillAdapter.BillClickListener{
+        mAdapter.setOnBillClickListener(object : CheckBillAdapter.BillClickListener {
             override fun onBillClickListener(bill: Bill) {
                 this@CheckBillFragment.view?.findNavController()?.navigate(CheckBillFragmentDirections.actionCheckBillFragmentToCheckBillDetailFragment(bill))
             }

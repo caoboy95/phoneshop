@@ -22,12 +22,12 @@ class CheckBillDetailViewModel(
 
     lateinit var bill: Bill
 
-    fun setData(bill : Bill){
+    fun setData(bill : Bill) {
         this.bill = bill
         getBillDetails(this.bill.id)
     }
 
-    fun getBillDetails(idBill: Int){
+    fun getBillDetails(idBill: Int) {
         viewModelScope.launch {
             _billDetails.value = Resource.Loading
             _billDetails.value = repository.getBillDetails(idBill)

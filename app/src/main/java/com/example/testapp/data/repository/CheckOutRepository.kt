@@ -18,7 +18,7 @@ class CheckOutRepository(
         }
     }
 
-    suspend fun getSelectedAddress(): AddressCustomer{
+    suspend fun getSelectedAddress(): AddressCustomer {
         return withContext(Dispatchers.IO){
             db.getAddressDao().getSelectedAddress()
         }
@@ -27,7 +27,7 @@ class CheckOutRepository(
     suspend fun checkOut(cartAndAddress: CartAndAddress) =
             safeApiCall { api.postCheckOut(cartAndAddress) }
 
-    suspend fun removeCart(cart: Cart){
+    suspend fun removeCart(cart: Cart) {
         withContext(Dispatchers.IO){
             db.getCartDao().deleteCart(cart)
         }

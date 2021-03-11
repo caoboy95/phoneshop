@@ -55,9 +55,9 @@ class EditAddressFragment : BaseFragment<AddressViewModel, AddAddressFragmentBin
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): AddAddressFragmentBinding = AddAddressFragmentBinding.inflate(inflater,container,false)
+    ): AddAddressFragmentBinding = AddAddressFragmentBinding.inflate(inflater, container, false)
 
-    override fun getViewModel()= AddressViewModel::class.java
+    override fun getViewModel() = AddressViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): AddressRepository =
         AddressRepository(db)

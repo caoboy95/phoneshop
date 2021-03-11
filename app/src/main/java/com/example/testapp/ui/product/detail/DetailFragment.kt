@@ -92,22 +92,22 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
         return super.onOptionsItemSelected(item)
     }
 
-
-    fun addViewPagerControl(product : Product,productVariants: List<ProductVariantWithImage>){
+    fun addViewPagerControl(product : Product, productVariants: List<ProductVariantWithImage>) {
         val manager :FragmentManager = childFragmentManager
-        val pagerAdapter= DetailProductPagerAdapter(manager,product,productVariants)
-        binding.pager.adapter= pagerAdapter
-        binding.pager.offscreenPageLimit=1
+        val pagerAdapter = DetailProductPagerAdapter(manager, product, productVariants)
+        binding.pager.adapter = pagerAdapter
+        binding.pager.offscreenPageLimit = 1
         binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
-    fun updateUI(productResponse: ProductDetailResponse){
-        val uri = Constant.URL_IMAGE+"product/"+productResponse.product.image
+    fun updateUI(productResponse: ProductDetailResponse) {
+        val uri = "${Constant.URL_IMAGE}product/${productResponse.product.image}"
+        Log.e(TAG, uri)
         Picasso.get().load(uri).into(binding.imageViewProductImage)
         binding.buttonAddToCart.setOnClickListener {
             val productVariant = this.arguments?.getParcelable<ProductVariantWithImage>("selected") as ProductVariantWithImage
             lifecycleScope.launch {
-                viewModel.addToCart(productVariant,productResponse.product.promotion_price).await().also { message ->
+                viewModel.addToCart(productVariant, productResponse.product.promotion_price).await().also { message ->
                     it.snackbar(message)
 //                    Toast.makeText(this@DetailFragment.requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
@@ -122,6 +122,10 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
 
     override fun getViewModel() = ProductDetailViewModel::class.java
 
-    override fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor) = ProductDetailRepository(remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor),db)
+    override fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor) =
+            ProductDetailRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), db)
 
+    companion object {
+        private val TAG = "DetailFragment"
+    }
 }

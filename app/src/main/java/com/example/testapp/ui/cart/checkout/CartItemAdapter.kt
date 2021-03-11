@@ -7,6 +7,7 @@ import com.example.testapp.Constant
 import com.example.testapp.data.db.entities.CartItem
 import com.example.testapp.databinding.CartItemAdapterBinding
 import com.example.testapp.ui.cart.CartViewAdapter
+import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.visible
 import com.squareup.picasso.Picasso
 import java.text.NumberFormat
@@ -20,10 +21,10 @@ class CartItemAdapter: RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
         notifyDataSetChanged()
     }
 
-    class CartItemHolder(val binding: CartItemAdapterBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(cartItem: CartItem){
-            binding.cartItem=cartItem
-            binding.textViewProductPrice.text= NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(cartItem.price)
+    class CartItemHolder(val binding: CartItemAdapterBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(cartItem: CartItem) {
+            binding.cartItem = cartItem
+            binding.textViewProductPrice.text = formatCurrency(cartItem.price)
             val uri = Constant.URL_IMAGE+"product/"+cartItem.item.image.link
             Picasso.get().load(uri).into(binding.imageViewProduct)
             binding.buttonRemoveCartItem.visible(false)
@@ -31,7 +32,7 @@ class CartItemAdapter: RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemHolder {
-        val inflater= LayoutInflater.from(parent.context)
+        val inflater = LayoutInflater.from(parent.context)
         val binding = CartItemAdapterBinding.inflate(inflater,parent,false)
         return CartItemHolder(binding)
     }
@@ -40,5 +41,5 @@ class CartItemAdapter: RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
         holder.bind(cartItems[position])
     }
 
-    override fun getItemCount(): Int =cartItems.size
+    override fun getItemCount(): Int = cartItems.size
 }

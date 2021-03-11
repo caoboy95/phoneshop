@@ -7,6 +7,7 @@ import com.example.testapp.R
 import com.example.testapp.data.db.entities.ProductVariant
 import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.databinding.ProductVariantItemAdapterBinding
+import com.example.testapp.ui.formatCurrency
 import java.text.NumberFormat
 import java.util.*
 
@@ -16,23 +17,25 @@ class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHo
     var productVariants = emptyList<ProductVariantWithImage>()
     var promotionPrice = 0
     private lateinit var clickListener: ClickListener
+
     fun setData(productVariants: List<ProductVariantWithImage>, promotionPrice: Int) {
         this.productVariants = productVariants
         this.promotionPrice= promotionPrice
         notifyDataSetChanged()
     }
+
     class ProductInfoHolder(val binding: ProductVariantItemAdapterBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(productVariant: ProductVariantWithImage, clickListener: ClickListener, promotionPrice: Int){
-            val version = productVariant.productVariant.version+" - "+productVariant.productVariant.color+
+            val version = "${productVariant.productVariant.version} - ${productVariant.productVariant.color}"+
                     if(productVariant.productVariant.quantity==0) {
                         binding.rootLayout.isEnabled= false
                         " (Hết)"}
                     else ""
-            val price = NumberFormat.getCurrencyInstance(Locale("vn", "VN")).format((productVariant.productVariant.unit_price *(100-promotionPrice) / 100))
+            val price = formatCurrency((productVariant.productVariant.unit_price *(100-promotionPrice) / 100).toInt())
             binding.textViewVersion.text = version
             binding.textViewPrice.text = price
             binding.radioButtonSelectVariant.setOnCheckedChangeListener { _, isChecked ->
-                if(isChecked) clickListener.onItemVariantClick(binding,productVariant)
+                if(isChecked) clickListener.onItemVariantClick(binding, productVariant)
             }
         }
     }
@@ -61,12 +64,12 @@ class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHo
 
     override fun getItemCount(): Int = productVariants.size
 
-    fun setOnVariantClickListener(clickListener: ClickListener){
-        this.clickListener=clickListener
+    fun setOnVariantClickListener(clickListener: ClickListener) {
+        this.clickListener = clickListener
     }
 
 
-    interface ClickListener{
+    interface ClickListener {
         fun onItemVariantClick(binding: ProductVariantItemAdapterBinding, productVariant: ProductVariantWithImage)
     }
 }

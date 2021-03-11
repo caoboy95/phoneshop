@@ -17,7 +17,7 @@ class DescriptionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: DescriptionFragmentBinding = DataBindingUtil.inflate(inflater,R.layout.description_fragment,container,false)
+        val binding: DescriptionFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.description_fragment, container, false)
         val description = arguments?.getString("description")
         binding.textViewDescription.text= description
         return binding.root
@@ -26,7 +26,5 @@ class DescriptionFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(DescriptionViewModel::class.java)
-        // TODO: Use the ViewModel
     }
-
 }

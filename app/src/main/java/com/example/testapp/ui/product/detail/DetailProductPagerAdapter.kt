@@ -20,8 +20,8 @@ class DetailProductPagerAdapter(
     override fun getItem(position: Int): Fragment {
         var frag: Fragment? = null
         when(position){
-            0 -> frag = newInstance(product,productVariants)
-            1 -> frag = newInstance(product.description)
+            0 -> frag = newInfoInstance(product,productVariants)
+            1 -> frag = newDescriptionInstance(product.description)
         }
         return frag as Fragment
     }
@@ -35,19 +35,20 @@ class DetailProductPagerAdapter(
         return title
     }
 
-    private fun newInstance(product: Product,productVariants: List<ProductVariantWithImage>) : InfoFragment {
+    private fun newInfoInstance(product: Product,productVariants: List<ProductVariantWithImage>) : InfoFragment {
         val args = Bundle()
-        args.putParcelable("product",product)
-        args.putParcelableArrayList("product_variants",productVariants as ArrayList<ProductVariantWithImage>)
+        args.putParcelable("product", product)
+        args.putParcelableArrayList("product_variants", productVariants as ArrayList<ProductVariantWithImage>)
         val frag = InfoFragment()
-        frag.arguments=args
+        frag.arguments = args
         return frag
     }
-    private fun newInstance(description: String) : DescriptionFragment {
+
+    private fun newDescriptionInstance(description: String) : DescriptionFragment {
         val args = Bundle()
-        args.putString("description",description)
+        args.putString("description", description)
         val frag = DescriptionFragment()
-        frag.arguments=args
+        frag.arguments = args
         return frag
     }
 }

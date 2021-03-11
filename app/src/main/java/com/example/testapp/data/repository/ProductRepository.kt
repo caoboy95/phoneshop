@@ -61,7 +61,7 @@ class ProductRepository(
 //                _products.postValue(response)
 //        }
 //    }
-//
+//    check fetch data every 6 hours
 //    private fun isFetchNeeded(savedAt: LocalDateTime): Boolean {
 ////        return ChronoUnit.HOURS.between(savedAt,LocalDateTime.now()) > MINIMUM_INTERVAL
 //        return true

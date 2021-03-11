@@ -11,8 +11,7 @@ import kotlinx.coroutines.withContext
 
 class CartRepository(
     private val db: AppDatabase
-):BaseRepository(){
-
+):BaseRepository() {
     private lateinit var cart: Cart
 
     suspend fun getCartFromDatabase(): Cart {

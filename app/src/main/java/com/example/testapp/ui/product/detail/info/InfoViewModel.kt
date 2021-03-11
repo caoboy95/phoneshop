@@ -17,7 +17,7 @@ class InfoViewModel(
     val productVariant : LiveData<Resource<ProductVariantResponse>>
         get() = _productVariants
 
-    fun getProductVariants(id_product: Int){
+    fun getProductVariants(id_product: Int) {
         viewModelScope.launch {
             _productVariants.value = Resource.Loading
             _productVariants.value = repository.getProductVariant(id_product)

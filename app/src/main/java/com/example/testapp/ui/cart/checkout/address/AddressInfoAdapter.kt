@@ -13,13 +13,13 @@ class AddressInfoAdapter(): RecyclerView.Adapter<AddressInfoAdapter.AddressViewH
     lateinit var clickListener: AddressClickListener
     private lateinit var addresses: List<AddressCustomer>
 
-    fun setData(addresses: List<AddressCustomer>){
+    fun setData(addresses: List<AddressCustomer>) {
         this.addresses = addresses
         notifyDataSetChanged()
     }
 
-    class AddressViewHolder(val binding : AddressInfoAdapterBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(address: AddressCustomer){
+    class AddressViewHolder(val binding : AddressInfoAdapterBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(address: AddressCustomer) {
             binding.layoutAddressInfo.address=address
             binding.radioButtonSelect.isChecked= address.selected
         }
@@ -48,11 +48,11 @@ class AddressInfoAdapter(): RecyclerView.Adapter<AddressInfoAdapter.AddressViewH
 
     override fun getItemCount(): Int = addresses.size
 
-    fun setOnClickListener(clickListener: AddressClickListener){
+    fun setOnClickListener(clickListener: AddressClickListener) {
         this.clickListener=clickListener
     }
 
-    interface AddressClickListener{
+    interface AddressClickListener {
         fun onEditClickListener(id: Int)
         fun onRemoveClickListener(addressCustomer: AddressCustomer)
         fun onSelectedClickListener(id:Int)

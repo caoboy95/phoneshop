@@ -18,6 +18,5 @@ interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveAllProducts(products : List<Product>)
-//    @Query("SELECT * FROM Product")
-//    fun getProducts(): LiveData<List<Product>>
+
 }

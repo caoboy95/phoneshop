@@ -19,12 +19,12 @@ class CheckBillViewModel(
         get() = _bills
     private lateinit var phone: String
 
-    fun setData(phone: String){
+    fun setData(phone: String) {
         this.phone=phone
         getBills()
     }
 
-    fun getBills(){
+    fun getBills() {
         viewModelScope.launch {
             _bills.value=Resource.Loading
             _bills.value =  repository.getBills(phone)

@@ -6,10 +6,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
-abstract class BaseRepository{
+abstract class BaseRepository {
     suspend fun <T> safeApiCall(
             apiCall: suspend () -> T
-    ): Resource<T>{
+    ): Resource<T> {
         return withContext(Dispatchers.IO){
             try{
                 Resource.Success(apiCall.invoke())
@@ -30,29 +30,30 @@ abstract class BaseRepository{
 
         }
     }
-    suspend fun <T> safeApiCall(
-        id:Int,
-        apiCall: suspend (Int) ->T
-    ): Resource<T>{
-        return withContext(Dispatchers.IO){
-            try{
-                Resource.Success(apiCall.invoke(id))
-            }
-            catch (throwable: Throwable){
-                when(throwable){
-                    is HttpException -> {
-                        Resource.Failure(true,throwable.code(),throwable.response()?.errorBody(),null)
-                    }
-                    is NoInternetException -> {
-                        Resource.Failure(false,null,null,throwable.message)
-                    }
-                    else -> {
-                        Resource.Failure(false,null,null,throwable.message)
-                    }
-                }
-            }
-        }
-    }
+    //call api with parameter
+//    suspend fun <T> safeApiCall(
+//        id:Int,
+//        apiCall: suspend (Int) ->T
+//    ): Resource<T> {
+//        return withContext(Dispatchers.IO){
+//            try{
+//                Resource.Success(apiCall.invoke(id))
+//            }
+//            catch (throwable: Throwable){
+//                when(throwable){
+//                    is HttpException -> {
+//                        Resource.Failure(true,throwable.code(),throwable.response()?.errorBody(),null)
+//                    }
+//                    is NoInternetException -> {
+//                        Resource.Failure(false,null,null,throwable.message)
+//                    }
+//                    else -> {
+//                        Resource.Failure(false,null,null,throwable.message)
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
 }

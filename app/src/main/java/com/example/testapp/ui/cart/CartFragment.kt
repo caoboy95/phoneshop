@@ -16,6 +16,7 @@ import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.repository.CartRepository
 import com.example.testapp.databinding.CartFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 import kotlinx.coroutines.launch
@@ -35,38 +36,37 @@ class CartFragment : BaseFragment<CartViewModel, CartFragmentBinding, CartReposi
         })
     }
 
-    fun refreshUI(){
+    fun refreshUI() {
         binding.recyclerViewCartItems.visible(false)
-        binding.textViewTotalPrice.text= NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(0)
+        binding.textViewTotalPrice.text= formatCurrency(0)
         binding.buttonCheckout.setOnClickListener {
             this.view?.snackbar("Hãy Chọn Sản Phẩm!")
         }
     }
 
-    fun updateUI(cart: Cart){
-        binding.textViewTotalPrice.text= NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(cart.totalPrice)
+    fun updateUI(cart: Cart) {
+        binding.textViewTotalPrice.text = formatCurrency(cart.totalPrice)
         initRecyclerView(cart)
         binding.buttonCheckout.setOnClickListener {
             val action = CartFragmentDirections.actionCartFragmentToCheckOutFragment()
             it.findNavController().navigate(action)
         }
-
     }
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): CartFragmentBinding = CartFragmentBinding.inflate(inflater,container,false)
+    ): CartFragmentBinding = CartFragmentBinding.inflate(inflater, container, false)
 
     override fun getViewModel() = CartViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor)
     = CartRepository(db)
 
-    fun initRecyclerView(cart: Cart){
+    fun initRecyclerView(cart: Cart) {
         val mAdapter = CartViewAdapter()
         mAdapter.setData(cart.items?.cartItems as List<CartItem>)
-        mAdapter.setOnRemoveClickListener(object : CartViewAdapter.ClickListener{
+        mAdapter.setOnRemoveClickListener(object : CartViewAdapter.ClickListener {
             override fun onRemoveClickListener(item: ProductVariantWithImage) {
                 lifecycleScope.launch {
                     this@CartFragment.view?.snackbar(viewModel.removeItemFromCart(item).await())

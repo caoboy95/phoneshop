@@ -10,9 +10,11 @@ import com.google.android.material.snackbar.Snackbar
 fun Context.toast(message: String){
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
 fun ProgressBar.isVisible(enabled: Boolean){
     this.isVisible = enabled
 }
+
 fun View.snackbar(message: String){
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).also { snackbar ->
         snackbar.setAction("Ok") {

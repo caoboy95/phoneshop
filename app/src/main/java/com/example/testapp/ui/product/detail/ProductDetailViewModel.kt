@@ -44,6 +44,7 @@ class ProductDetailViewModel(
     fun setID(id: Int){
         _productID=id
     }
+
     fun getProductDetailFromApi(id: Int) {
         viewModelScope.launch {
             _product.value = Resource.Loading
@@ -57,11 +58,10 @@ class ProductDetailViewModel(
             _productVariants.value = repository.getProductVariantsFromApi(id_product)
         }
     }
-    fun addToCart(productVariant: ProductVariantWithImage,promotionPrice: Int): Deferred<String>{
+
+    fun addToCart(productVariant: ProductVariantWithImage, promotionPrice: Int): Deferred<String> {
         return viewModelScope.async {
-            repository.addToCart(productVariant,promotionPrice)
+            repository.addToCart(productVariant, promotionPrice)
         }
     }
-
-
 }

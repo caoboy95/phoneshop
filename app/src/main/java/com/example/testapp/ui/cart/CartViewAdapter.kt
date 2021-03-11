@@ -22,7 +22,7 @@ class CartViewAdapter: RecyclerView.Adapter<CartViewAdapter.CartHolder>() {
         notifyDataSetChanged()
     }
 
-    class CartHolder(val binding: CartItemAdapterBinding): RecyclerView.ViewHolder(binding.root){
+    class CartHolder(val binding: CartItemAdapterBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(cartItem: CartItem,clickListener: ClickListener){
             binding.cartItem=cartItem
             binding.textViewProductPrice.text= NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(cartItem.price)
@@ -47,11 +47,11 @@ class CartViewAdapter: RecyclerView.Adapter<CartViewAdapter.CartHolder>() {
 
     override fun getItemCount(): Int = cartItems.size
 
-    fun setOnRemoveClickListener(clickListener: ClickListener){
+    fun setOnRemoveClickListener(clickListener: ClickListener) {
         this.clickListener=clickListener
     }
 
-    interface ClickListener{
+    interface ClickListener {
         fun onRemoveClickListener(item: ProductVariantWithImage)
     }
 }

@@ -21,14 +21,14 @@ import com.example.testapp.databinding.CheckBillDetailFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.handleApiError
 
-class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel,CheckBillDetailFragmentBinding,CheckBillDetailRepository>() {
+class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBillDetailFragmentBinding, CheckBillDetailRepository>() {
 
     val safeArgs: CheckBillDetailFragmentArgs by navArgs()
+    val checkBillDetailAdapter = CheckBillDetailAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(safeArgs.bill != null)
-            viewModel.setData(safeArgs.bill)
+        viewModel.setData(safeArgs.bill)
         viewModel.billDetail.observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Success -> updateUI(it.value)
@@ -43,7 +43,7 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel,CheckBillD
         })
     }
 
-    fun updateUI(billDetail: BillDetailResponse){
+    fun updateUI(billDetail: BillDetailResponse) {
         binding.textViewCheckBillDetailId.text = viewModel.bill.id.toString()
         binding.textViewCheckBillDetailDate.text = viewModel.bill.date_order
         binding.textViewCheckBillDetailStatus.text = when(viewModel.bill.status){
@@ -61,13 +61,12 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel,CheckBillD
         initRecyclerView(billDetail.billDetailsInfo)
     }
 
-    fun initRecyclerView(billDetailsInfo: List<BillDetailsInfo>){
-        val mAdapter = CheckBillDetailAdapter()
-        mAdapter.setData(billDetailsInfo)
+    fun initRecyclerView(billDetailsInfo: List<BillDetailsInfo>) {
+        checkBillDetailAdapter.setData(billDetailsInfo)
         binding.recyclerViewCheckBillDetailItem.apply {
-            layoutManager= LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
-            adapter= mAdapter
+            adapter= checkBillDetailAdapter
         }
     }
 
@@ -80,6 +79,5 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel,CheckBillD
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): CheckBillDetailRepository =
         CheckBillDetailRepository(remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor))
-
 
 }
