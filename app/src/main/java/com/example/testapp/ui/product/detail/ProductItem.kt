@@ -7,6 +7,12 @@ import com.example.testapp.data.db.entities.Product
 import com.example.testapp.databinding.ProductViewAdapterBinding
 import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.product.ProductFragmentDirections
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.databinding.BindableItem
 import java.text.NumberFormat
@@ -18,6 +24,8 @@ class ProductItem(
 
     override fun getLayout() = R.layout.product_view_adapter
     private lateinit var clickListener: ClickListener
+    val firebaseDatabase: StorageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://dienthoaiviet-89c4a.appspot.com")
+
 
     override fun bind(viewBinding: ProductViewAdapterBinding, position: Int) {
         viewBinding.product = product
@@ -34,8 +42,14 @@ class ProductItem(
             7 -> "by Oneplus"
             else-> null
         }
-        var image = "${Constant.URL_IMAGE}product/${product.image}"
-        Picasso.get().load(image).into(viewBinding.imageViewProductImage)
+        var image = "product/${product.image}"
+        firebaseDatabase.child(image).downloadUrl.addOnCompleteListener {
+            it?.let {
+                if (it.isSuccessful) {
+                    Picasso.get().load(it.result).into(viewBinding.imageViewProductImage)
+                }
+            }
+        }
         viewBinding.buttonPreview.setOnClickListener {
             val action = ProductFragmentDirections.startDetailFragment(product.id)
             it.findNavController().navigate(action)

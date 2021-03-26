@@ -19,7 +19,7 @@ import com.example.testapp.ui.visible
 import kotlinx.coroutines.launch
 
 
-class InfoFragment() : BaseFragment<InfoViewModel,InfoFragmentBinding,ProductInfoRepository>() {
+class InfoFragment() : BaseFragment<InfoViewModel, InfoFragmentBinding, ProductInfoRepository>() {
 
     private var _selectedProductVariant: ProductVariantWithImage? = null
     val selectedProductVariant : ProductVariantWithImage?
@@ -32,20 +32,19 @@ class InfoFragment() : BaseFragment<InfoViewModel,InfoFragmentBinding,ProductInf
         binding.progressBar.visible(true)
         updateUI(product, productVariants)
         binding.progressBar.visible(false)
-
     }
 
     fun updateUI(product: Product, productVariants: List<ProductVariantWithImage>) {
-        binding.textViewName.text = (product.name + if(product.promotion_price!=0) " (Sale ${product.promotion_price}%)" else "" )
+        binding.textViewName.text = (product.name + if (product.promotion_price!=0) " (Sale ${product.promotion_price}%)" else "" )
         lifecycleScope.launch {
             binding.textViewBrand.text = viewModel.getBrand(product.id_company).await().let {
-                when(it){
+                when(it) {
                     is Resource.Success -> it.value.name
                     else -> "Không"
                 }
             }
             binding.textViewType.text = viewModel.getType(product.id_type).await().let {
-                when(it){
+                when(it) {
                     is Resource.Success -> it.value.name
                     else -> "Không"
                 }

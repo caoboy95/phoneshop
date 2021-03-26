@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "545300531797",
+    "project_id": "dienthoaiviet-89c4a",
+    "storage_bucket": "dienthoaiviet-89c4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545300531797:android:db867a8f5be18b512d22dc",
+        "android_client_info": {
+          "package_name": "com.example.testapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545300531797-mdhs85vik5on6755j9jb4qjss77cljf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbXOO_K8p3db2OZRdHvPimRUklDKRXKD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545300531797-mdhs85vik5on6755j9jb4qjss77cljf1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

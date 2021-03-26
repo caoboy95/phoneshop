@@ -36,6 +36,7 @@ class ProductFragment : BaseFragment<ProductViewModel, FragmentProductBinding, P
 //                    Toast.makeText(requireContext(), it.value.toString(), Toast.LENGTH_SHORT).show()
                     binding.progressBar.visible(false)
                     bindUI(it.value.products)
+//                    viewModel.addAllProductsToFirebase(it.value.products)
                 }
                 is Resource.Loading -> {
                     binding.progressBar.visible(true)
@@ -43,13 +44,13 @@ class ProductFragment : BaseFragment<ProductViewModel, FragmentProductBinding, P
                 is Resource.Failure -> {
                     binding.progressBar.visible(false)
                     this.handleApiError(it)
-                    Coroutines.main {
-                        viewModel.productFromRoom.await().observe(viewLifecycleOwner, Observer {
-                            if(it != null){
-                                bindUI(it)
-                            }
-                        })
-                    }
+//                    Coroutines.main {
+//                        viewModel.productFromRoom.await().observe(viewLifecycleOwner, Observer {
+//                            if(it != null){
+//                                bindUI(it)
+//                            }
+//                        })
+//                    }
                 }
             }
         })

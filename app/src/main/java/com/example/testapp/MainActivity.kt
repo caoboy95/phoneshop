@@ -25,9 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.profileFragment, R.id.billFragment, R.id.profileFragment, R.id.settingFragment))
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
+        setSupportActionBar(binding.toolbar)
+        NavigationUI.setupWithNavController(binding.toolbar,navController)
 //        binding.bottomNavView.setOnNavigationItemSelectedListener { item->
 //            NavigationUI.onNavDestinationSelected(item, navController)
 //            getSupportActionBar()?.setDisplayHomeAsUpEnabled(false);

@@ -26,25 +26,30 @@
                 <include
                     android:id="@+id/layout_address_info"
                     layout="@layout/address_info_layout"/>
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_edit_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="35sp"
                     android:layout_height="wrap_content"
-                    android:text="Sửa"
+                    app:icon="@drawable/ic_baseline_edit_24"
+                    app:iconGravity="textEnd"
+                    app:iconPadding="0sp"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_alignParentEnd="true"/>
                 <RadioButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="35sp"
                     android:layout_height="wrap_content"
                     android:id="@+id/radio_button_select"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/button_edit_address"
-                    android:layout_marginEnd="30sp"
                     />
-                <Button
-                    android:layout_width="wrap_content"
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="35sp"
                     android:layout_height="wrap_content"
                     android:id="@+id/button_delete_address"
-                    android:text="Xóa"
+                    app:icon="@drawable/ic_baseline_delete_24"
+                    app:iconGravity="textEnd"
+                    app:iconPadding="0sp"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/radio_button_select"/>
             </RelativeLayout>

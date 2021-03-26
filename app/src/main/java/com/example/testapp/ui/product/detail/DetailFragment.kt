@@ -3,12 +3,14 @@ package com.example.testapp.ui.product.detail
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.fullmvvm.util.isVisible
 import com.example.testapp.Constant
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Product
@@ -47,9 +49,9 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
                     viewModel.productVariants.observe(viewLifecycleOwner, Observer { productVariants ->
                         when (productVariants) {
                             is Resource.Success -> {
-                                binding.progressBar.visible(false)
                                 updateUI(it.value)
                                 addViewPagerControl(it.value.product, productVariants.value.product_variants)
+                                binding.progressBar.visible(false)
                             }
                             is Resource.Loading -> {
                                 binding.progressBar.visible(true)

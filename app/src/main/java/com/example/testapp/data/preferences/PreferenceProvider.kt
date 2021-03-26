@@ -2,14 +2,7 @@ package net.simplifiedcoding.mvvmsampleapp.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.createDataStore
 import androidx.preference.PreferenceManager
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 //make data store to save  and retrieve values
 //class PreferenceProvider(

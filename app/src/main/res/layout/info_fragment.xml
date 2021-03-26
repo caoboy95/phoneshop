@@ -6,12 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.product.detail.info.InfoFragment"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foregroundGravity="center">
+            android:foregroundGravity="center"
+            android:orientation="horizontal"
+            >
 
         </androidx.recyclerview.widget.RecyclerView>
         <RelativeLayout
@@ -24,60 +27,68 @@
             android:id="@+id/text_view_title_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tên"
+            android:text="Tên"
             android:textSize="20sp"
             android:layout_marginTop="10sp"
+            android:textColor="@color/font_info"
             />
         <TextView
             android:id="@+id/text_view_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:text="Name"
             android:textSize="20sp"
             android:layout_below="@id/text_view_title_name"
             android:layout_marginBottom="10sp"
+            android:textColor="@color/font_info"
             />
         <TextView
             android:id="@+id/text_view_title_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Loại"
+            android:text="Loại"
             android:textSize="20sp"
             android:layout_below="@id/text_view_name"
             android:layout_marginTop="10sp"
+            android:textColor="@color/font_info"
             />
         <TextView
             android:id="@+id/text_view_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Type"
+            android:text="Type"
             android:textSize="20sp"
             android:layout_below="@id/text_view_title_type"
-            android:layout_marginBottom="10sp"/>
+            android:layout_marginBottom="10sp"
+            android:textColor="@color/font_info"
+            />
         <TextView
             android:id="@+id/text_view_title_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hãng"
+            android:text="Hãng"
             android:textSize="20sp"
             android:layout_below="@id/text_view_type"
             android:layout_marginTop="10sp"
+            android:textColor="@color/font_info"
             />
         <TextView
             android:id="@+id/text_view_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Brand"
+            android:text="Brand"
             android:textSize="20sp"
             android:layout_below="@id/text_view_title_brand"
             android:layout_margin="0sp"
+            android:textColor="@color/font_info"
             />
         </RelativeLayout>
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130sp"
             />
     </RelativeLayout>
 </layout>

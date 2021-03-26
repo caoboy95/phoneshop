@@ -9,18 +9,18 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Product (
-    var created_at: String?,
-    var description: String,
+    var created_at: String? = null,
+    var description: String = "",
     @PrimaryKey(autoGenerate = false)
-    var id: Int,
-    var id_company: Int,
-    var id_type: Int,
-    var image: String,
-    var last_modified_by_user: Int,
-    var name: String,
+    var id: Int = 0,
+    var id_company: Int = 0,
+    var id_type: Int = 0,
+    var image: String = "",
+    var last_modified_by_user: Int = 0,
+    var name: String = "",
     @ColumnInfo(name = "mnew")
-    var mnew: Int,
-    var promotion_price: Int,
-    var unit_price: Int,
-    var updated_at: String?
+    var mnew: Int = 0,
+    var promotion_price: Int = 0,
+    var unit_price: Int = 0,
+    var updated_at: String? = null
 ): Parcelable

@@ -6,13 +6,14 @@
             name="customer"
             type="com.example.testapp.data.db.entities.Customer" />
     </data>
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.bill.CheckBillFragment"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/layout_customer_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10sp"
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_check_bill_title"
             android:text="@{customer.name}"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:hint="Tên"/>
 
         <TextView
             android:id="@+id/text_view_check_bill_gender"
@@ -72,7 +74,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/check_bill_item_adapter"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/layout_customer_info"
         />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:layout_centerInParent="true" />
+</RelativeLayout>
 </layout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -35,7 +36,12 @@
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:tabSelectedTextColor="@color/orange"
+                    app:tabTextColor="@color/font_info"
+                    app:tabIndicatorColor="@color/orange"
+                    app:tabIndicatorHeight="4dp"
+                    />
 
             </androidx.viewpager.widget.ViewPager>
         </RelativeLayout>
@@ -43,14 +49,13 @@
     </RelativeLayout>
     <Button
         android:id="@+id/button_add_to_cart"
-        android:layout_width="200sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mua"
+        android:text="Thêm Vào Giỏ Hàng"
+        style="@style/Widget.MaterialComponents.Button"
         android:textSize="20sp"
-        android:textColor="@color/gray"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_custom"
         android:layout_margin="10sp"
         />
 
@@ -58,7 +63,8 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110sp"
         />
 </RelativeLayout>
 </layout>

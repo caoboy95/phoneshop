@@ -38,12 +38,13 @@ class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBind
             when(it){
                 is Resource.Success -> {
                     updateUI(it.value.billsWithCustomer)
+                    binding.progressBar.visible(false)
                 }
                 is Resource.Loading -> {
-//                    binding.progressBar.visible(true)
+                    binding.progressBar.visible(true)
                 }
                 is Resource.Failure -> {
-//                    binding.progressBar.visible(false)
+                    binding.progressBar.visible(false)
                     this.handleApiError(it)
                 }
             }

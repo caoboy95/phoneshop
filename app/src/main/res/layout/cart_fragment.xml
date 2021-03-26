@@ -13,8 +13,9 @@
     <RelativeLayout
         android:id="@+id/relative_layout_cart_items"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_above="@id/relative_layout_bottom_cart">
+        android:layout_height="match_parent"
+        android:layout_above="@id/relative_layout_bottom_cart"
+        android:paddingTop="5sp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_cart_items"
