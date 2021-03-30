@@ -10,7 +10,7 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.testapp.ui.product.ProductFragment">
+    tools:context="com.example.testapp.ui.product.view.ProductFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

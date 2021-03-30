@@ -1,4 +1,4 @@
-package com.example.testapp.ui.product.detail.info
+package com.example.testapp.ui.product.view.detail.info
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.testapp.R
 import com.example.testapp.databinding.DescriptionFragmentBinding
+import com.example.testapp.ui.product.viewmodel.DescriptionViewModel
 
 class DescriptionFragment : Fragment() {
     private lateinit var viewModel: DescriptionViewModel

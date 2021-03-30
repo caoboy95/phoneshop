@@ -1,4 +1,4 @@
-package com.example.testapp.data.db.entities
+package com.example.testapp.data.firebase.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -19,7 +19,7 @@ data class Product (
     var last_modified_by_user: Int = 0,
     var name: String = "",
     @ColumnInfo(name = "mnew")
-    var new: Int = 0,
+    var mnew: Int = 0,
     var promotion_price: Int = 0,
     var unit_price: Int = 0,
     var updated_at: String? = null

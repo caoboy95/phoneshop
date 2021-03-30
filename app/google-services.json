@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "545300531797",
-    "project_id": "dienthoaiviet-89c4a",
-    "storage_bucket": "dienthoaiviet-89c4a.appspot.com"
+    "project_number": "1097938389224",
+    "firebase_url": "https://dien-thoai-viet-default-rtdb.firebaseio.com",
+    "project_id": "dien-thoai-viet",
+    "storage_bucket": "dien-thoai-viet.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:545300531797:android:db867a8f5be18b512d22dc",
+        "mobilesdk_app_id": "1:1097938389224:android:44a139934293400eb8615d",
         "android_client_info": {
           "package_name": "com.example.testapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "545300531797-mdhs85vik5on6755j9jb4qjss77cljf1.apps.googleusercontent.com",
+          "client_id": "1097938389224-fq11l1nvno6cjm2nmh6hm94vikigver3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBbXOO_K8p3db2OZRdHvPimRUklDKRXKD4"
+          "current_key": "AIzaSyBsQhz3XOzhK87gkSW1uGFvlZJpRtHKl3Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "545300531797-mdhs85vik5on6755j9jb4qjss77cljf1.apps.googleusercontent.com",
+              "client_id": "1097938389224-fq11l1nvno6cjm2nmh6hm94vikigver3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

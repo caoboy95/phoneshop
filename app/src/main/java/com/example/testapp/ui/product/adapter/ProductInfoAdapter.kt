@@ -1,37 +1,34 @@
-package com.example.testapp.ui.product.detail.info
+package com.example.testapp.ui.product.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.R
 import com.example.testapp.data.db.entities.ProductVariant
 import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.databinding.ProductVariantItemAdapterBinding
 import com.example.testapp.ui.formatCurrency
-import java.text.NumberFormat
-import java.util.*
 
 class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHolder>() {
 
     var lastCheckedPosition: Int = 0
-    var productVariants = emptyList<ProductVariantWithImage>()
+    var productVariants = emptyList<ProductVariant>()
     var promotionPrice = 0
     private lateinit var clickListener: ClickListener
 
-    fun setData(productVariants: List<ProductVariantWithImage>, promotionPrice: Int) {
+    fun setData(productVariants: List<ProductVariant>, promotionPrice: Int) {
         this.productVariants = productVariants
         this.promotionPrice= promotionPrice
         notifyDataSetChanged()
     }
 
     class ProductInfoHolder(val binding: ProductVariantItemAdapterBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(productVariant: ProductVariantWithImage, clickListener: ClickListener, promotionPrice: Int){
-            val version = "${productVariant.productVariant.version} - ${productVariant.productVariant.color}"+
-                    if(productVariant.productVariant.quantity==0) {
+        fun bind(productVariant: ProductVariant, clickListener: ClickListener, promotionPrice: Int){
+            val version = "${productVariant.version} - ${productVariant.color}"+
+                    if(productVariant.quantity==0) {
                         binding.rootLayout.isEnabled= false
                         " (Hết)"}
                     else ""
-            val price = formatCurrency((productVariant.productVariant.unit_price *(100-promotionPrice) / 100).toInt())
+            val price = formatCurrency((productVariant.unit_price *(100-promotionPrice) / 100).toInt())
             binding.textViewVersion.text = version
             binding.textViewPrice.text = price
             binding.radioButtonSelectVariant.setOnCheckedChangeListener { _, isChecked ->
@@ -51,7 +48,7 @@ class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHo
         holder.binding.radioButtonSelectVariant.isChecked = (lastCheckedPosition == position)
         holder.binding.rootLayout.setOnClickListener {
             if (position == lastCheckedPosition) {
-                holder.binding.radioButtonSelectVariant.setChecked(true);
+                holder.binding.radioButtonSelectVariant.isChecked = true;
                 lastCheckedPosition = -1;
             } else {
                 lastCheckedPosition = position;
@@ -70,6 +67,6 @@ class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHo
 
 
     interface ClickListener {
-        fun onItemVariantClick(binding: ProductVariantItemAdapterBinding, productVariant: ProductVariantWithImage)
+        fun onItemVariantClick(binding: ProductVariantItemAdapterBinding, productVariant: ProductVariant)
     }
 }

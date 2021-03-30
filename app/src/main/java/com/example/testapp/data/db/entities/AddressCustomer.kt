@@ -16,4 +16,4 @@ data class AddressCustomer(
     var phone: String,
     var address: String,
     var gender: String,
-):Parcelable
+): Parcelable

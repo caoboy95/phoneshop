@@ -36,9 +36,9 @@ abstract class BaseFragment<VM:BaseViewModel,B: ViewDataBinding,R:BaseRepository
     ): View? {
         db= AppDatabase.invoke(requireContext())
         prefs = PreferenceProvider(requireContext())
-        binding = getFragmentBinding(inflater,container)
+        binding = getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository(NetworkConnectionInterceptor(requireContext())))
-        viewModel=ViewModelProvider(this,factory).get(getViewModel())
+        viewModel=ViewModelProvider(this, factory).get(getViewModel())
         AndroidThreeTen.init(requireContext())
         return binding.root
     }

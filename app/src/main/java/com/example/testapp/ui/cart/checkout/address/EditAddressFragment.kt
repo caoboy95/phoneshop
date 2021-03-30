@@ -12,7 +12,6 @@ import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddAddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
-import com.example.testapp.ui.product.detail.DetailFragmentArgs
 import kotlinx.coroutines.launch
 
 class EditAddressFragment : BaseFragment<AddressViewModel, AddAddressFragmentBinding, AddressRepository>() {

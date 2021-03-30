@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.example.testapp.ui.product.ProductFragment"
+        android:name="com.example.testapp.ui.product.view.ProductFragment"
         android:label="Sản Phẩm"
         tools:layout="@layout/fragment_product" >
         <action
@@ -23,13 +23,12 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment2"
-        android:name="com.example.testapp.ui.product.detail.DetailFragment"
+        android:name="com.example.testapp.ui.product.view.detail.DetailFragment"
         android:label="Chi Tiết Sản Phẩm"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="id"
-            app:argType="integer"
-            android:defaultValue="0"/>
+            android:name="product"
+            app:argType="com.example.testapp.data.db.entities.Product" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

@@ -10,17 +10,17 @@ import kotlinx.parcelize.Parcelize
 @Entity
 data class ProductVariant(
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
-    val id_product: Int,
-    val name: String,
-    val color: String,
-    val version: String,
-    val unit_price: Float,
-    val id_image: Int,
-    val quantity: Int,
-    val last_modified_by_user: Int,
-    val created_at: String,
-    val updated_at: String,
+    val id: Int = 0,
+    val id_product: Int = 0,
+    val name: String = "",
+    val color: String = "",
+    val version: String = "",
+    val unit_price: Int = 0,
+    val id_image: Int = 0,
+    val quantity: Int = 0,
+    val last_modified_by_user: Int = 0,
+    val created_at: String = "",
+    val updated_at: String = "",
 ): Parcelable
 
 @Parcelize

@@ -19,66 +19,52 @@ data class Cart(
         var totalQty: Int,
         @ColumnInfo(name = "totalprice")
         var totalPrice: Int
-):Parcelable
+): Parcelable
 {
-//    constructor(cart: Cart) : this(cart.id,cart.items,cart.totalQty,cart.totalPrice)
-    fun addToCart(item: ProductVariantWithImage,promotionPrice:Int,qty: Int) {
-//        val price = (item.productVariant.unit_price*(100-promotionPrice))/100
-        val price = item.productVariant.unit_price*80/100
-        var cartItem : CartItem
-        cartItem = if(promotionPrice == 0)
-                        CartItem(item,0,item.productVariant.unit_price.toInt(),0)
-                    else CartItem(item,0,price.toInt(),0)
-        if(this.items!=null)
-        {//if cart has nothing
-            this.items?.cartItems?.find {
-                it.item.productVariant.id==item.productVariant.id
-            }.let {
-                if (it!=null) {
+    fun addToCart(item: ProductVariantWithImage, promotionPrice:Int, qty: Int) {
+        val price = (item.productVariant.unit_price * (100 - promotionPrice)) / 100
+        var cartItem = CartItem(item, 0, item.productVariant.unit_price.toInt(), 0)
+        this.items?.let { it ->
+            it.cartItems.find { cartItem ->
+                cartItem.item.productVariant.id == item.productVariant.id
+            }.let HasItem@{
+                it?.let {
                     cartItem = it
-                    cartItem.quantity+=qty
-                    cartItem.totalPriceItem+= cartItem.price*cartItem.quantity
+                    cartItem.quantity += qty
+                    cartItem.totalPriceItem += cartItem.price * cartItem.quantity
+                    return@HasItem
                 }
-                else { //if cart doesn't has this product
-                    cartItem = CartItem(item,1,price.toInt(),price.toInt())
-                    this.items?.cartItems?.add(cartItem)
-                }
+                //if cart doesn't has this product
+                cartItem = CartItem(item, 1, price.toInt(), price.toInt())
+                this.items?.cartItems?.add(cartItem)
             }
             this.id=0
-            this.totalQty = this.totalQty.plus(qty)
-            this.totalPrice = this.totalPrice.plus(cartItem.price*qty)
+            this.totalQty += qty
+            this.totalPrice += cartItem.price * qty
+            return
         }
-        else {
-            this.id = 0
-            this.totalQty = this.totalQty.plus(qty)
-            cartItem.quantity += qty
-            cartItem.totalPriceItem = cartItem.price * cartItem.quantity
-            this.items = CartItems(mutableListOf(cartItem))
-//        this.items?.cartItems?.add(cartItem)
-            this.totalPrice = this.totalPrice.plus(cartItem.price * qty)
-        }
-
+        //if cart has nothing
+        this.id = 0
+        this.totalQty += qty
+        this.totalPrice += cartItem.price * qty
+        cartItem.quantity += qty
+        cartItem.totalPriceItem = cartItem.price * cartItem.quantity
+        this.items = CartItems(mutableListOf(cartItem))
     }
 
     fun removeItemFromCart(item: ProductVariantWithImage) {
-        var cartItem : CartItem
-        if(this.items!=null)
-        {//if cart has nothing
-            this.items?.cartItems?.find {
-                it.item.productVariant.id==item.productVariant.id
-            }.let {
-                if (it!=null) {
-                    cartItem = it
-                    this.totalQty = this.totalQty.minus(cartItem.quantity)
-                    this.totalPrice = this.totalPrice.minus(cartItem.totalPriceItem)
-                    this.items?.cartItems?.remove(cartItem)
+        this.items?.let { items ->
+            items.cartItems.find { it.item.productVariant.id==item.productVariant.id }.let { item ->
+                item?.let {
+                    this.totalQty -= it.quantity
+                    this.totalPrice -= it.totalPriceItem
+                    this.items?.cartItems?.remove(it)
                 }
             }
-            this.id=0
-
         }
     }
 }
+
 // use converter to store data to database as object type
 class CartItemsConverters {
         @TypeConverter
@@ -95,6 +81,6 @@ class CartItemsConverters {
 
 @Parcelize
 data class CartAndAddress(
-        val cart:Cart,
+        val cart: Cart,
         val addressCustomer: AddressCustomer
-):Parcelable
+): Parcelable

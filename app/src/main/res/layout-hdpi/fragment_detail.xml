@@ -6,7 +6,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.testapp.ui.product.detail.DetailFragment">
+    tools:context="com.example.testapp.ui.product.view.detail.DetailFragment">
 
     <RelativeLayout
         android:layout_above="@id/button_add_to_cart"

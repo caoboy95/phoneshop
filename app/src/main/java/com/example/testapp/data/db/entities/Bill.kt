@@ -16,7 +16,7 @@ data class Bill(
     val status: Int,
     val total: Int,
     val updated_at: String
-):Parcelable
+): Parcelable
 
 data class BillAndQuantity(
     val bill: Bill,

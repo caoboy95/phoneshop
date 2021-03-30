@@ -1,11 +1,14 @@
 package com.example.testapp.data.repository
 
 import androidx.lifecycle.LiveData
+import com.example.testapp.Constant.NODE_PRODUCTS
+import com.example.testapp.Constant.NODE_PRODUCT_VARIANTS
 import com.example.testapp.data.db.AppDatabase
 import com.example.testapp.data.db.entities.Cart
 import com.example.testapp.data.db.entities.Product
 import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.data.network.ProductApi
+import com.google.firebase.database.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,8 +18,8 @@ class ProductDetailRepository(
 ): BaseRepository() {
     private lateinit var cart: Cart
 
-    suspend fun getProductDetailFromRoom(id: Int) :LiveData<Product>{
-        return withContext(Dispatchers.IO){
+    suspend fun getProductDetailFromRoom(id: Int) : LiveData<Product> {
+        return withContext(Dispatchers.IO) {
             db.getProductDao().getProductItem(id)
         }
     }
@@ -25,10 +28,10 @@ class ProductDetailRepository(
 
     suspend fun getProductVariantsFromApi(id_product: Int) = safeApiCall { api.getProductVariants(id_product) }
 
-    suspend fun addToCart(productVariant: ProductVariantWithImage,promotionPrice: Int) :String {
+    suspend fun addToCart(productVariant: ProductVariantWithImage, promotionPrice: Int) :String {
         return withContext(Dispatchers.IO) {
             try {
-                if(productVariant.productVariant.quantity!=0) {
+                if(productVariant.productVariant.quantity != 0) {
                     if (db.getCartDao().getCart() != null) {
                         cart = db.getCartDao().getCart()
                     } else {
@@ -36,13 +39,21 @@ class ProductDetailRepository(
                     }
                     cart.addToCart(productVariant, promotionPrice, 1)
                     db.getCartDao().insertCart(cart)
-                    return@withContext "Đã Thêm Vào Giỏ Hàng"
+                    return@withContext ADDED_CART
                 }
-                "Sản Phẩm Đã Hết Hàng"
+                OUT_OF_STOCK
             } catch (e: Exception) {
                 e.toString()
             }
         }
     }
 
+    fun getProductVariantsFromFirebase(productID: Int) : Query {
+        return firebaseDatabase.getReference(NODE_PRODUCT_VARIANTS).orderByChild("id_product").equalTo(productID.toDouble())
+    }
+
+    companion object {
+        private const val ADDED_CART = "Đã Thêm Vào Giỏ Hàng"
+        private const val OUT_OF_STOCK = "Sản Phẩm Đã Hết Hàng"
+    }
 }

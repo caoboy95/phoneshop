@@ -5,7 +5,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.product.detail.info.InfoFragment"
+        tools:context=".ui.product.view.detail.info.InfoFragment"
         android:orientation="horizontal"
         >
         <androidx.recyclerview.widget.RecyclerView

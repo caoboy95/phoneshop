@@ -9,9 +9,9 @@ import com.example.testapp.ui.bill.detail.CheckBillDetailViewModel
 import com.example.testapp.ui.cart.CartViewModel
 import com.example.testapp.ui.cart.checkout.CheckOutViewModel
 import com.example.testapp.ui.cart.checkout.address.AddressViewModel
-import com.example.testapp.ui.product.ProductViewModel
-import com.example.testapp.ui.product.detail.ProductDetailViewModel
-import com.example.testapp.ui.product.detail.info.InfoViewModel
+import com.example.testapp.ui.product.viewmodel.ProductViewModel
+import com.example.testapp.ui.product.viewmodel.ProductDetailViewModel
+import com.example.testapp.ui.product.viewmodel.InfoViewModel
 
 class ViewModelFactory(
     private val repository: BaseRepository

@@ -16,7 +16,6 @@ import com.example.testapp.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    val STATE = "Trạng Thái"
     private lateinit var appBarConfiguration : AppBarConfiguration
     lateinit var binding: ActivityMainBinding
 
@@ -25,24 +24,9 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val navController = findNavController(R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(setOf(R.id.profileFragment, R.id.billFragment, R.id.profileFragment, R.id.settingFragment))
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
         binding.bottomNavView.setupWithNavController(navController)
         setSupportActionBar(binding.toolbar)
         NavigationUI.setupWithNavController(binding.toolbar,navController)
-//        binding.bottomNavView.setOnNavigationItemSelectedListener { item->
-//            NavigationUI.onNavDestinationSelected(item, navController)
-//            getSupportActionBar()?.setDisplayHomeAsUpEnabled(false);
-//            false
-//        }
-//        getSupportActionBar()?.setDisplayHomeAsUpEnabled(false);
-//        val navOptions = NavOptions.Builder()
-//            .setEnterAnim(R.anim.from_right)
-//            .setPopExitAnim(R.anim.exit_right)
-//            .setPopEnterAnim(R.anim.from_left)
-//            .setExitAnim(R.anim.exit_left)
-//            .setLaunchSingleTop(true)
-//            .build()
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

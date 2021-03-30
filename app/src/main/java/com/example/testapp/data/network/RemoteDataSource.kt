@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDataSource {
     companion object {
-//        private const val BASE_URL = "http://10.0.3.2:8000/api/"
         private const val BASE_URL = "${Constant.URL}api/"
     }
 

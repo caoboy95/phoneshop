@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.example.testapp.data.db.entities.*
 
 @Database(
-    entities = [Product::class,Cart::class,AddressCustomer::class],
+    entities = [Product::class,Cart::class, AddressCustomer::class],
     version = 2, exportSchema = false
 )
 @TypeConverters(CartItemsConverters::class)

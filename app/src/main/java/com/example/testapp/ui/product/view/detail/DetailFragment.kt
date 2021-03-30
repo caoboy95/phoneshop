@@ -1,19 +1,19 @@
-package com.example.testapp.ui.product.detail
+package com.example.testapp.ui.product.view.detail
 
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.fullmvvm.util.isVisible
+import com.example.fullmvvm.util.snackbar
 import com.example.testapp.Constant
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Product
+import com.example.testapp.data.db.entities.ProductVariant
 import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.network.ProductApi
@@ -23,7 +23,8 @@ import com.example.testapp.data.response.ProductDetailResponse
 import com.example.testapp.databinding.FragmentDetailBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.handleApiError
-import com.example.testapp.ui.snackbar
+import com.example.testapp.ui.product.adapter.DetailProductPagerAdapter
+import com.example.testapp.ui.product.viewmodel.ProductDetailViewModel
 import com.example.testapp.ui.visible
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
@@ -31,46 +32,20 @@ import java.util.*
 
 
 class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBinding, ProductDetailRepository>() {
-
-    val safeArgs: DetailFragmentArgs by navArgs()
+    private var pagerAdapter : DetailProductPagerAdapter? = null
+    private val safeArgs: DetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        if(safeArgs.id!=0){
-            viewModel.setID(safeArgs.id)
-        }
+        viewModel.setData(safeArgs.product)
+        updateUI(safeArgs.product)
         binding.progressBar.visible(true)
-        viewModel.getProductDetailFromApi(viewModel.productID)
-        viewModel.product.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is Resource.Success -> {
-                    viewModel.getProductVariantsFromApi(viewModel.productID)
-                    viewModel.productVariants.observe(viewLifecycleOwner, Observer { productVariants ->
-                        when (productVariants) {
-                            is Resource.Success -> {
-                                updateUI(it.value)
-                                addViewPagerControl(it.value.product, productVariants.value.product_variants)
-                                binding.progressBar.visible(false)
-                            }
-                            is Resource.Loading -> {
-                                binding.progressBar.visible(true)
-                            }
-                            is Resource.Failure -> {
-                                binding.progressBar.visible(false)
-                                this@DetailFragment.handleApiError(productVariants)
-                            }
-                        }
-                    })
-                    binding.progressBar.visible(false)
-                }
-                is Resource.Loading -> {
-                    binding.progressBar.visible(true)
-                }
-                is Resource.Failure -> {
-                    binding.progressBar.visible(false)
-                    this@DetailFragment.handleApiError(it)
-                }
+//        viewModel.getProductDetailFromApi(viewModel.productID)
+        viewModel.productVariantsFB.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                addViewPagerControl(safeArgs.product, it)
+                binding.progressBar.visible(false)
             }
         })
     }
@@ -94,24 +69,22 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
         return super.onOptionsItemSelected(item)
     }
 
-    fun addViewPagerControl(product : Product, productVariants: List<ProductVariantWithImage>) {
+    private fun addViewPagerControl(product : Product, productVariants: List<ProductVariant>) {
         val manager :FragmentManager = childFragmentManager
-        val pagerAdapter = DetailProductPagerAdapter(manager, product, productVariants)
+        pagerAdapter = DetailProductPagerAdapter(manager, product)
+        pagerAdapter?.setData(productVariants)
         binding.pager.adapter = pagerAdapter
         binding.pager.offscreenPageLimit = 1
         binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
-    fun updateUI(productResponse: ProductDetailResponse) {
-        val uri = "${Constant.URL_IMAGE}product/${productResponse.product.image}"
-        Log.e(TAG, uri)
-        Picasso.get().load(uri).into(binding.imageViewProductImage)
+    private fun updateUI(product: Product) {
+        Picasso.get().load(viewModel.getRepository().getProductImageFromFirebase(product.image)).into(binding.imageViewProductImage)
         binding.buttonAddToCart.setOnClickListener {
             val productVariant = this.arguments?.getParcelable<ProductVariantWithImage>("selected") as ProductVariantWithImage
             lifecycleScope.launch {
-                viewModel.addToCart(productVariant, productResponse.product.promotion_price).await().also { message ->
+                viewModel.addToCart(productVariant, product.promotion_price).await().also { message ->
                     it.snackbar(message)
-//                    Toast.makeText(this@DetailFragment.requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -128,6 +101,6 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
             ProductDetailRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), db)
 
     companion object {
-        private val TAG = "DetailFragment"
+        private const val TAG = "DetailFragment"
     }
 }
