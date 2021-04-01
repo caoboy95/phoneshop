@@ -49,13 +49,13 @@ class ProductDetailViewModel(
         }
     }
 
-    fun addToCart(productVariant: ProductVariantWithImage, promotionPrice: Int): Deferred<String> {
+    fun addToCartAsync(productVariant: ProductVariant, promotionPrice: Int): Deferred<String> {
         return viewModelScope.async {
             repository.addToCart(productVariant, promotionPrice)
         }
     }
 
-    fun getProductVariantsFromFirebase(productID: Int) {
+    private fun getProductVariantsFromFirebase(productID: Int) {
         repository.getProductVariantsFromFirebase(productID).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val productVariants = mutableListOf<ProductVariant>()

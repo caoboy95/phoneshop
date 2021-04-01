@@ -28,21 +28,21 @@ interface ProductApi {
     @GET("bills/{phone}")
     suspend fun getBills(
         @Path(value="phone") phone: String
-    ):BillResponse
+    ): BillResponse
 
     @GET("bills/detail/{id}")
     suspend fun getBillDetails(
         @Path(value="id") idBill: Int
-    ):BillDetailResponse
+    ): BillDetailResponse
 
     @GET("type/{id}")
     suspend fun getType(
             @Path(value="id") id: Int
-    ):TypeProduct
+    ): TypeProduct
 
     @GET("brand/{id}")
     suspend fun getBrand(
             @Path(value="id") id: Int
-    ):Brand
+    ): Brand
 }
 

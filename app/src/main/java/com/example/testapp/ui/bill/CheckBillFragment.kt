@@ -33,30 +33,35 @@ class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setData(safeArgs.phone)
-//        this.view?.snackbar(safeArgs.phone)
-        viewModel.bills.observe(viewLifecycleOwner, Observer {
-            when(it){
-                is Resource.Success -> {
-                    updateUI(it.value.billsWithCustomer)
-                    binding.progressBar.visible(false)
-                }
-                is Resource.Loading -> {
-                    binding.progressBar.visible(true)
-                }
-                is Resource.Failure -> {
-                    binding.progressBar.visible(false)
-                    this.handleApiError(it)
-                }
+        viewModel.billsFB.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                updateUI(it)
+                binding.progressBar.visible(false)
             }
         })
+//        viewModel.bills.observe(viewLifecycleOwner, Observer {
+//            when(it){
+//                is Resource.Success -> {
+//                    updateUI(it.value.billsWithCustomer)
+//                    binding.progressBar.visible(false)
+//                }
+//                is Resource.Loading -> {
+//                    binding.progressBar.visible(true)
+//                }
+//                is Resource.Failure -> {
+//                    binding.progressBar.visible(false)
+//                    this.handleApiError(it)
+//                }
+//            }
+//        })
     }
 
-    fun updateUI(billsWithCustomer: BillsWithCustomer) {
-        binding.customer= billsWithCustomer.customer
+    private fun updateUI(billsWithCustomer: BillsWithCustomer) {
+        binding.customer = billsWithCustomer.customer
         initRecyclerView(billsWithCustomer.billAndQuantity)
     }
 
-    fun initRecyclerView(billAndQuantity: List<BillAndQuantity>) {
+    private fun initRecyclerView(billAndQuantity: List<BillAndQuantity>) {
         val mAdapter = CheckBillAdapter()
         mAdapter.setOnBillClickListener(object : CheckBillAdapter.BillClickListener {
             override fun onBillClickListener(bill: Bill) {

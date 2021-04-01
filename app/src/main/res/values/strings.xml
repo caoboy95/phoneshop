@@ -14,4 +14,28 @@
 
     <string name="shop_name" >Điện Thoại Việt</string>
     <string name="network_connection">Vui lòng kiểm tra kết nối internet</string>
+    <string name="title_type">Loại</string>
+    <string name="unknow">Unknow</string>
+    <string name="title_brand">Hãng</string>
+    <string name="title_name">Tên</string>
+    <string name="default_cost">10.000.000đ</string>
+    <string name="default_version">Version</string>
+    <string name="default_description">Chưa có mô tả</string>
+    <string name="preview_button">Xem Ngay</string>
+    <string name="title_information">Thông Tin</string>
+    <string name="title_description">Mô Tả</string>
+    <string name="title_quality">Số lượng</string>
+    <string name="default_quality">1</string>
+    <string name="title_price">Giá</string>
+    <string name="delete">Xóa</string>
+    <string name="title_color">Màu:</string>
+    <string name="default_color">Đỏ</string>
+    <string name="title_version">Phiên Bản:</string>
+    <string name="default_phone_name">Iphone 18</string>
+    <string name="title_product">Sản phẩm:</string>
+    <string name="required_address">Hãy cập nhật địa chỉ</string>
+    <string name="button_order">Đặt Hàng</string>
+    <string name="title_total_price">Tổng Tiền:</string>
+    <string name="default_phone_check_bill">0903831922</string>
+    <string name="button_check_bill">Kiểm Tra</string>
 </resources>

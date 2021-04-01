@@ -35,7 +35,7 @@ class ProductAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ProductViewAdapterBinding.inflate(inflater, parent, false)
-        return ProductViewHolder(binding)
+        return ProductViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -45,7 +45,8 @@ class ProductAdapter(
     override fun getItemCount(): Int = products.size
 
     class ProductViewHolder(
-        val binding: ProductViewAdapterBinding
+        val binding: ProductViewAdapterBinding,
+        val context: Context
         ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product, productRepository: ProductRepository) {
@@ -53,21 +54,22 @@ class ProductAdapter(
             val price = formatCurrency(product.unit_price) +
                     if(product.promotion_price != 0) " (Sale ${product.promotion_price}%)" else ""
             binding.textViewProductPrice.text = price
-            getBrands(product.id_company.toDouble(), productRepository)
-            Picasso.get().load(productRepository.getProductImageFromFirebase(product.image)).placeholder(
-                R.drawable.placeholder).into(binding.imageViewProductImage)
+            getBrands(product.id_company, productRepository)
+            productRepository.getProductImageFromFirebase(product.image).addOnSuccessListener {
+                Picasso.get().load(it).placeholder(R.drawable.placeholder).into(binding.imageViewProductImage)
+            }.addOnFailureListener {
+                Log.e(TAG, "Error: $it")
+            }
             binding.buttonPreview.setOnClickListener {
                 val action = ProductFragmentDirections.startDetailFragment(product)
                 it.findNavController().navigate(action)
             }
         }
 
-        private fun getBrands(id: Double, productRepository: ProductRepository) {
+        private fun getBrands(brandID: Int, productRepository: ProductRepository) {
             var brandName = "by Unknown"
-            productRepository.getBrandsFromFirebase()
-                .orderByChild("id")
-                .equalTo(id)
-                .addValueEventListener(object : ValueEventListener {
+            productRepository.getBrandFromFirebase(brandID)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
                             snapshot.children.forEach {
@@ -80,7 +82,7 @@ class ProductAdapter(
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-
+                        binding.textViewProductBrand.text = context.resources.getString(R.string.unknow)
                     }
                 })
         }

@@ -11,14 +11,14 @@
         android:id="@+id/edit_text_check_bill_phone"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:text="0985636595"
+        android:text="@string/default_phone_check_bill"
         android:layout_centerInParent="true"
         />
     <Button
         android:id="@+id/button_check_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kiểm Tra"
+        android:text="@string/button_check_bill"
         android:layout_below="@id/edit_text_check_bill_phone"
         android:layout_centerHorizontal="true"
         />

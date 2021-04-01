@@ -5,10 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CartItem (
-        var item: ProductVariantWithImage,
+        var item: ProductVariant,
         var quantity: Int,
-        var price: Int,
-        var totalPriceItem: Int
+        var price: Long,
+        var totalPriceItem: Long
 ):Parcelable
 
 @Parcelize

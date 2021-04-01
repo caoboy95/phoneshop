@@ -21,6 +21,6 @@ data class Product (
     @ColumnInfo(name = "mnew")
     var new: Int = 0,
     var promotion_price: Int = 0,
-    var unit_price: Int = 0,
+    var unit_price: Long = 0,
     var updated_at: String? = null
 ): Parcelable

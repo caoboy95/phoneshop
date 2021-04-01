@@ -6,6 +6,7 @@ import com.example.testapp.Constant.NODE_PRODUCT_VARIANTS
 import com.example.testapp.data.db.AppDatabase
 import com.example.testapp.data.db.entities.Cart
 import com.example.testapp.data.db.entities.Product
+import com.example.testapp.data.db.entities.ProductVariant
 import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.data.network.ProductApi
 import com.google.firebase.database.Query
@@ -28,10 +29,10 @@ class ProductDetailRepository(
 
     suspend fun getProductVariantsFromApi(id_product: Int) = safeApiCall { api.getProductVariants(id_product) }
 
-    suspend fun addToCart(productVariant: ProductVariantWithImage, promotionPrice: Int) :String {
+    suspend fun addToCart(productVariant: ProductVariant, promotionPrice: Int) :String {
         return withContext(Dispatchers.IO) {
             try {
-                if(productVariant.productVariant.quantity != 0) {
+                if(productVariant.quantity != 0) {
                     if (db.getCartDao().getCart() != null) {
                         cart = db.getCartDao().getCart()
                     } else {

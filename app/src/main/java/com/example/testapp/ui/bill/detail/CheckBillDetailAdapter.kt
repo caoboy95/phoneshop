@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.Constant
 import com.example.testapp.data.db.entities.BillDetailsInfo
+import com.example.testapp.data.repository.CheckBillDetailRepository
 import com.example.testapp.databinding.CheckBillDetailFragmentBinding
 import com.example.testapp.databinding.CheckBillDetailItemAdapterBinding
 import com.example.testapp.ui.formatCurrency
@@ -12,7 +13,7 @@ import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 import java.util.*
 
-class CheckBillDetailAdapter : RecyclerView.Adapter<CheckBillDetailAdapter.CheckBillDetailHolder>() {
+class CheckBillDetailAdapter(val repository: CheckBillDetailRepository) : RecyclerView.Adapter<CheckBillDetailAdapter.CheckBillDetailHolder>() {
 
     private lateinit var billDetailsInfo: List<BillDetailsInfo>
 

@@ -5,17 +5,17 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Bill(
-    val created_at: String,
-    val date_order: String,
-    val id: Int,
-    val id_customer: Int,
-    val id_user: Int?,
-    val last_modified_by_user: Int?,
-    val note: String?,
-    val payment: String,
-    val status: Int,
-    val total: Int,
-    val updated_at: String
+    val created_at: String = "",
+    val date_order: String = "",
+    val id: Int = 0,
+    val id_customer: Int = 0,
+    val id_user: Int = 0,
+    val last_modified_by_user: Int = 0,
+    val note: String = "",
+    val payment: String = "",
+    val status: Int = 0,
+    val total: Long = 0,
+    val updated_at: String = ""
 ): Parcelable
 
 data class BillAndQuantity(

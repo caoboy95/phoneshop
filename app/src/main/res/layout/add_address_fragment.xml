@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="name"
+                android:textColor="@color/font_info"
                 android:layout_marginBottom="10sp"
                 />
             <RadioGroup
@@ -47,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
+                android:textColor="@color/font_info"
                 android:layout_marginBottom="10sp"
                 />
             <EditText
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Phone"
                 android:layout_marginBottom="10sp"
+                android:textColor="@color/font_info"
                 />
             <EditText
                 android:id="@+id/edit_text_customer_address"
@@ -62,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Address"
                 android:layout_marginBottom="10sp"
+                android:textColor="@color/font_info"
                 />
         </LinearLayout>
 

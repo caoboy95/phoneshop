@@ -6,12 +6,25 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.testapp.data.network.Resource
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
 import java.text.NumberFormat
 import java.util.*
 
-fun formatCurrency(currency: Int): String = NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(currency)
+fun <T> DataSnapshot.getDataValue(dataClass: Class<T>) : List<T> {
+    val data = mutableListOf<T>()
+    if (this.exists()) {
+        this.children.forEach { dataSnapshot ->
+            dataSnapshot?.getValue(dataClass)?.let {
+                data.add(it)
+            }
+        }
+    }
+    return data
+}
 
-fun<A: Activity> Activity.startNewActivity(activity: Class<A>) {
+fun formatCurrency(currency: Long): String = NumberFormat.getCurrencyInstance(Locale("vn","VN")).format(currency)
+
+fun <A: Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).also {
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(it)

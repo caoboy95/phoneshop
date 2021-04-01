@@ -7,7 +7,6 @@ import com.example.testapp.Constant.NODE_COMPANIES
 import com.example.testapp.Constant.NODE_IMAGES
 import com.example.testapp.Constant.NODE_PRODUCTS
 import com.example.testapp.Constant.NODE_TYPE_PRODUCTS
-import com.example.testapp.Constant.URL_FIREBASESTORAGE
 import com.example.testapp.data.db.AppDatabase
 import com.example.testapp.data.db.entities.Product
 import com.example.testapp.data.network.ProductApi
@@ -29,13 +28,13 @@ class ProductRepository(
     private val products = MutableLiveData<List<Product>>()
 
     //Firebase
-    fun getBrandsFromFirebase() = firebaseDatabase.getReference(NODE_COMPANIES)
+    fun getBrandFromFirebase(brandID: Int) = firebaseDatabase.getReference(NODE_COMPANIES).orderByChild("id").equalTo(brandID.toDouble())
 
-    fun getTypesFromFirebase() = firebaseDatabase.getReference(NODE_TYPE_PRODUCTS)
+    fun getTypesFromFirebase() = firebaseDatabase.getReference(NODE_TYPE_PRODUCTS).orderByChild("id")
 
-    fun getImagesFromFirebase() = firebaseDatabase.getReference(NODE_IMAGES)
+    fun getImagesFromFirebase() = firebaseDatabase.getReference(NODE_IMAGES).orderByChild("id")
 
-    fun getProductsFromFirebase() = firebaseDatabase.getReference(NODE_PRODUCTS)
+    fun getProductsFromFirebase() = firebaseDatabase.getReference(NODE_PRODUCTS).orderByChild("id")
 
 
     //Rest API

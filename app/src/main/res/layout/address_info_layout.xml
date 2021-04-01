@@ -7,23 +7,25 @@
         </data>
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/text_view_customer_name"
-            android:layout_width="120sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{address.name}"
-            android:hint="Tên"
+            tools:text="Tên"
             android:textSize="22sp"
-            android:textColor="#3C3C3C" />
+            android:textColor="@color/font_info"/>
         <TextView
             android:id="@+id/text_view_customer_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Giới Tính"
+            tools:text="Giới Tính"
             android:text="@{address.gender}"
+            android:textColor="@color/font_info"
             android:textSize="15sp"
             android:layout_below="@id/text_view_customer_name"
             android:layout_marginTop="5sp"
@@ -33,7 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{address.phone}"
-            android:hint="0905003225"
+            android:textColor="@color/font_info"
+            tools:text="0905003225"
             android:textSize="15sp"
             android:layout_below="@id/text_view_customer_gender"/>
         <TextView
@@ -41,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{address.email}"
-            android:hint="customer@gmail.com"
+            tools:text="customer@gmail.com"
+            android:textColor="@color/font_info"
             android:textSize="15sp"
             android:layout_below="@id/text_view_customer_phone"/>
         <TextView
@@ -49,7 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{address.address}"
-            android:hint="123 Lê Duẩn"
+            tools:text="123 Lê Duẩn"
+            android:textColor="@color/font_info"
             android:textSize="15sp"
             android:layout_below="@id/text_view_customer_email"/>
 </merge>

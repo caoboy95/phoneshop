@@ -12,10 +12,9 @@ data class ProductVariant(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 0,
     val id_product: Int = 0,
-    val name: String = "",
     val color: String = "",
     val version: String = "",
-    val unit_price: Int = 0,
+    val unit_price: Long = 0,
     val id_image: Int = 0,
     val quantity: Int = 0,
     val last_modified_by_user: Int = 0,

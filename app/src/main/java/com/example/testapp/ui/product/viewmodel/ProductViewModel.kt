@@ -1,14 +1,17 @@
 package com.example.testapp.ui.product.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fullmvvm.util.lazyDeferred
 import com.example.testapp.data.db.entities.Product
 import com.example.testapp.data.repository.ProductRepository
 import com.example.testapp.ui.base.BaseViewModel
+import com.example.testapp.ui.getDataValue
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import okhttp3.internal.notify
 
 class ProductViewModel(
     private val repository: ProductRepository
@@ -21,13 +24,9 @@ class ProductViewModel(
     private val _products : MutableLiveData<List<Product>> = MutableLiveData()
     val products : LiveData<List<Product>>
         get() = _products
-    private val _result = MutableLiveData<Exception?>()
-    val result: LiveData<Exception?>
+    private val _result = MutableLiveData<Exception>()
+    val result: LiveData<Exception>
         get() = _result
-
-    init {
-        getProductsFromFirebase()
-    }
 
     //Rest API
 //    private val _products : MutableLiveData<Resource<ProductResponse>> = MutableLiveData()
@@ -56,24 +55,18 @@ class ProductViewModel(
 
     fun getRepository() = repository
 
-    private fun getProductsFromFirebase() {
-        repository.getProductsFromFirebase().addListenerForSingleValueEvent(object :
+    fun getProductsFromFirebase() {
+        repository.getProductsFromFirebase().addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    val products = mutableListOf<Product>()
-                    snapshot.children.forEach { data ->
-                        data?.let { dataSnapshot ->
-                            val product = dataSnapshot.getValue(Product::class.java)
-                            product?.let { products.add(it) }
-                        }
-                    }
-                    _products.value = products
+                    _products.value = snapshot.getDataValue(Product::class.java)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 _result.value = error.toException()
+                Log.e(TAG, "$error")
             }
         })
     }

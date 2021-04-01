@@ -1,6 +1,5 @@
 package com.example.testapp.data.repository
 
-import android.net.Uri
 import com.example.fullmvvm.util.NoInternetException
 import com.example.testapp.Constant
 import com.example.testapp.data.network.Resource
@@ -14,21 +13,8 @@ abstract class BaseRepository {
     val firebaseDatabase = FirebaseDatabase.getInstance()
     val firebaseStorage = FirebaseStorage.getInstance()
 
-    fun getProductImageFromFirebase(url: String) : Uri {
-        var uriImage : Uri = Uri.EMPTY
-        firebaseStorage.getReferenceFromUrl(Constant.URL_FIREBASESTORAGE)
-            .child("product/$url")
-            .downloadUrl
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    it.result?.let { uri ->
-                        uriImage = uri
-                    }
-                }
-            }
-        return uriImage
-    }
-
+    fun getProductImageFromFirebase(url: String) =
+            firebaseStorage.getReferenceFromUrl(Constant.URL_FIREBASE_STORAGE).child("product/$url").downloadUrl
 
     suspend fun <T> safeApiCall(
             apiCall: suspend () -> T

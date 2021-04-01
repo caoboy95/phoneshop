@@ -29,22 +29,25 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBill
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setData(safeArgs.bill)
-        viewModel.billDetail.observe(viewLifecycleOwner, Observer {
-            when(it){
-                is Resource.Success -> updateUI(it.value)
-                is Resource.Loading -> {
-//                    binding.progressBar.visible(true)
-                }
-                is Resource.Failure -> {
-//                    binding.progressBar.visible(false)
-                    this.handleApiError(it)
-                }
-            }
+        viewModel.billDetailsFB.observe(viewLifecycleOwner, Observer {
+            updateUI(it)
         })
+//        viewModel.billDetail.observe(viewLifecycleOwner, Observer {
+//            when(it){
+//                is Resource.Success -> updateUI(it.value)
+//                is Resource.Loading -> {
+////                    binding.progressBar.visible(true)
+//                }
+//                is Resource.Failure -> {
+////                    binding.progressBar.visible(false)
+//                    this.handleApiError(it)
+//                }
+//            }
+//        })
     }
 
-    fun updateUI(billDetail: BillDetailResponse) {
-        binding.textViewCheckBillDetailId.text = viewModel.bill.id.toString()
+    private fun updateUI(billDetail: BillDetailResponse) {
+        binding.textViewCheckBillDetailId.text = "#${viewModel.bill.id}"
         binding.textViewCheckBillDetailDate.text = viewModel.bill.date_order
         binding.textViewCheckBillDetailStatus.text = when(viewModel.bill.status){
             0 -> {
@@ -61,7 +64,7 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBill
         initRecyclerView(billDetail.billDetailsInfo)
     }
 
-    fun initRecyclerView(billDetailsInfo: List<BillDetailsInfo>) {
+    private fun initRecyclerView(billDetailsInfo: List<BillDetailsInfo>) {
         checkBillDetailAdapter.setData(billDetailsInfo)
         binding.recyclerViewCheckBillDetailItem.apply {
             layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

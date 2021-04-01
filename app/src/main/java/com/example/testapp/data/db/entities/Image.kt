@@ -9,9 +9,9 @@ import kotlinx.parcelize.Parcelize
 @Entity
 data class Image(
     @PrimaryKey
-    val id: Int,
-    val id_product: Int,
-    val link: String,
-    val created_at: String,
-    val updated_at: String
+    val id: Int = 0,
+    val id_product: Int = 0,
+    val link: String = "",
+    val created_at: String = "",
+    val updated_at: String = ""
 ): Parcelable

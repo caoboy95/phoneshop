@@ -2,6 +2,7 @@ package com.example.testapp.data.db.entities
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import androidx.room.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -18,15 +19,15 @@ data class Cart(
         @ColumnInfo(name = "totalqty")
         var totalQty: Int,
         @ColumnInfo(name = "totalprice")
-        var totalPrice: Int
+        var totalPrice: Long
 ): Parcelable
 {
-    fun addToCart(item: ProductVariantWithImage, promotionPrice:Int, qty: Int) {
-        val price = (item.productVariant.unit_price * (100 - promotionPrice)) / 100
-        var cartItem = CartItem(item, 0, item.productVariant.unit_price.toInt(), 0)
+    fun addToCart(item: ProductVariant, promotionPrice:Int, qty: Int) {
+        val price = (item.unit_price * (100 - promotionPrice)) / 100
+        var cartItem = CartItem(item, 0, price, 0)
         this.items?.let { it ->
             it.cartItems.find { cartItem ->
-                cartItem.item.productVariant.id == item.productVariant.id
+                cartItem.item.id == item.id
             }.let HasItem@{
                 it?.let {
                     cartItem = it
@@ -35,16 +36,14 @@ data class Cart(
                     return@HasItem
                 }
                 //if cart doesn't has this product
-                cartItem = CartItem(item, 1, price.toInt(), price.toInt())
+                cartItem = CartItem(item, 1, price, price)
                 this.items?.cartItems?.add(cartItem)
             }
-            this.id=0
             this.totalQty += qty
             this.totalPrice += cartItem.price * qty
             return
         }
         //if cart has nothing
-        this.id = 0
         this.totalQty += qty
         this.totalPrice += cartItem.price * qty
         cartItem.quantity += qty
@@ -52,9 +51,9 @@ data class Cart(
         this.items = CartItems(mutableListOf(cartItem))
     }
 
-    fun removeItemFromCart(item: ProductVariantWithImage) {
+    fun removeItemFromCart(item: ProductVariant) {
         this.items?.let { items ->
-            items.cartItems.find { it.item.productVariant.id==item.productVariant.id }.let { item ->
+            items.cartItems.find { it.item.id==item.id }.let { item ->
                 item?.let {
                     this.totalQty -= it.quantity
                     this.totalPrice -= it.totalPriceItem

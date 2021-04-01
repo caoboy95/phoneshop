@@ -13,26 +13,28 @@ import com.example.testapp.data.db.entities.CartAndAddress
 import com.example.testapp.data.db.entities.CartItem
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.network.ProductApi
+import com.example.testapp.data.repository.CartRepository
 import com.example.testapp.data.repository.CheckOutRepository
 import com.example.testapp.databinding.FragmentCheckOutNotifyBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.formatCurrency
 import java.text.NumberFormat
 import java.util.*
 
 
-class CheckOutNotifyFragment : BaseFragment<CheckOutViewModel,FragmentCheckOutNotifyBinding,CheckOutRepository>() {
+class CheckOutNotifyFragment : BaseFragment<CheckOutViewModel, FragmentCheckOutNotifyBinding, CartRepository>() {
 
-    val safeArgs : CheckOutNotifyFragmentArgs by navArgs()
+    private val safeArgs : CheckOutNotifyFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateUI(safeArgs.cartAndAddress)
-        binding.textViewBillId.text=("#"+safeArgs.idBill.toString())
     }
 
-    fun updateUI(cartAndAddress: CartAndAddress){
-        binding.layoutAddressInfo.address= cartAndAddress.addressCustomer
-        binding.textViewTotalPrice.text= NumberFormat.getCurrencyInstance(Locale("vn", "VN")).format(cartAndAddress.cart.totalPrice)
+    private fun updateUI(cartAndAddress: CartAndAddress) {
+        binding.textViewBillId.text = ("#${safeArgs.idBill}")
+        binding.layoutAddressInfo.address = cartAndAddress.addressCustomer
+        binding.textViewTotalPrice.text = formatCurrency(cartAndAddress.cart.totalPrice)
         cartAndAddress.cart.items?.let {
             initRecyclerView(it.cartItems as List<CartItem>)
         }
@@ -41,8 +43,8 @@ class CheckOutNotifyFragment : BaseFragment<CheckOutViewModel,FragmentCheckOutNo
         }
     }
 
-    fun initRecyclerView(cart: List<CartItem>){
-        val mAdapter = CartItemAdapter()
+    private fun initRecyclerView(cart: List<CartItem>) {
+        val mAdapter = CartItemAdapter(viewModel.getRepository())
         mAdapter.setData(cart)
         binding.recyclerViewCartItemInfo.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -54,10 +56,10 @@ class CheckOutNotifyFragment : BaseFragment<CheckOutViewModel,FragmentCheckOutNo
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentCheckOutNotifyBinding = FragmentCheckOutNotifyBinding.inflate(inflater,container,false)
+    ): FragmentCheckOutNotifyBinding = FragmentCheckOutNotifyBinding.inflate(inflater, container, false)
 
-    override fun getViewModel()= CheckOutViewModel::class.java
+    override fun getViewModel() = CheckOutViewModel::class.java
 
-    override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): CheckOutRepository =
-        CheckOutRepository(db,remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor))
+    override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): CartRepository =
+        CartRepository(db, remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor))
 }

@@ -17,5 +17,8 @@ object Constant {
     const val NODE_PRODUCT_VARIANTS : String = "product_variants"
     const val NODE_IMAGES : String = "images"
     const val NODE_CUSTOMERS : String = "customers"
-    const val URL_FIREBASESTORAGE = "gs://dien-thoai-viet.appspot.com"
+    const val URL_FIREBASE_STORAGE = "gs://dien-thoai-viet.appspot.com"
+    const val PRODUCT_KEY = "product"
+    const val DESCRIPTION_KEY = "description"
+    const val SELECTED_VARIANT_KEY = "selected"
 }

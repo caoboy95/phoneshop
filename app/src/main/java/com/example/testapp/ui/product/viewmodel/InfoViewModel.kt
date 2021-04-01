@@ -3,6 +3,7 @@ package com.example.testapp.ui.product.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.testapp.Constant
 import com.example.testapp.data.network.Resource
 import com.example.testapp.data.repository.ProductInfoRepository
 import com.example.testapp.data.response.ProductVariantResponse
@@ -31,4 +32,8 @@ class InfoViewModel(
     fun getBrand(id: Int) = viewModelScope.async {
         repository.getBrand(id)
     }
+
+    fun getTypeFromFirebase(typeID: Int) = repository.getTypeFromFirebase(typeID)
+
+    fun getBrandFromFirebase(brandID: Int) = repository.getBrandFromFirebase(brandID)
 }

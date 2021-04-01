@@ -15,24 +15,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-
-        >
-
+        style="@style/CardViewStyle">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="320sp"
             android:background="#FFF"
             android:paddingTop="5sp"
-            >
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp">
             <ImageView
                 android:id="@+id/imageViewProductImage"
                 android:layout_width="match_parent"
                 android:layout_height="187dp"
-                android:background="#FFF"
-                android:src="@drawable/ic_baseline_table_rows_24"
+                android:background="@color/white"
+                android:src="@drawable/placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,10 +37,9 @@
                 android:id="@+id/textViewProductName"
                 android:layout_width="match_parent"
                 android:layout_height="35sp"
-                android:paddingLeft="20sp"
                 android:paddingTop="5sp"
-                android:textColor="#222222"
-                android:textSize="18sp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/font_info"
                 android:textStyle="bold"
                 android:text="@{product.name}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,16 +50,15 @@
             <TextView
                 android:id="@+id/textViewProductBrand"
                 android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:paddingLeft="20sp"
-                android:paddingTop="0sp"
-                android:textColor="#878787"
-                android:textSize="13sp"
+                android:layout_height="wrap_content"
+                android:paddingTop="2sp"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewProductName"
-                tools:text="By Apple Cor" />
+                tools:text="By Unknow" />
 
             <TextView
                 android:id="@+id/textViewProductPrice"
@@ -72,9 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="16dp"
-                android:paddingLeft="20sp"
                 android:paddingTop="0sp"
-                android:textColor="#3E3E3E"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -84,19 +77,18 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonPreview"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="8dp"
-                style="?attr/materialButtonOutlinedStyle"
-                android:text="Xem Ngay"
-                android:textColor="#606060"
-                app:rippleColor="@color/colorPrimary"
+                android:text="@string/preview_button"
+                android:textColor="@color/font_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewProductBrand"
-                app:layout_constraintVertical_bias="0.6" />
+                app:layout_constraintVertical_bias="1.0"
+                app:rippleColor="@color/colorPrimary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,5 +1,7 @@
 package com.example.testapp.ui.product.view.detail
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.fullmvvm.util.snackbar
 import com.example.testapp.Constant
+import com.example.testapp.Constant.SELECTED_VARIANT_KEY
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Product
 import com.example.testapp.data.db.entities.ProductVariant
@@ -39,12 +42,12 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         viewModel.setData(safeArgs.product)
-        updateUI(safeArgs.product)
         binding.progressBar.visible(true)
 //        viewModel.getProductDetailFromApi(viewModel.productID)
         viewModel.productVariantsFB.observe(viewLifecycleOwner, Observer {
             it?.let {
-                addViewPagerControl(safeArgs.product, it)
+                updateUI(safeArgs.product)
+                addViewPagerControl(safeArgs.product, requireContext(), it)
                 binding.progressBar.visible(false)
             }
         })
@@ -69,9 +72,9 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
         return super.onOptionsItemSelected(item)
     }
 
-    private fun addViewPagerControl(product : Product, productVariants: List<ProductVariant>) {
+    private fun addViewPagerControl(product : Product, context: Context, productVariants: List<ProductVariant>) {
         val manager :FragmentManager = childFragmentManager
-        pagerAdapter = DetailProductPagerAdapter(manager, product)
+        pagerAdapter = DetailProductPagerAdapter(manager, context, product)
         pagerAdapter?.setData(productVariants)
         binding.pager.adapter = pagerAdapter
         binding.pager.offscreenPageLimit = 1
@@ -79,11 +82,13 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
     }
 
     private fun updateUI(product: Product) {
-        Picasso.get().load(viewModel.getRepository().getProductImageFromFirebase(product.image)).into(binding.imageViewProductImage)
+        viewModel.getRepository().getProductImageFromFirebase(product.image).addOnSuccessListener {
+            Picasso.get().load(it).placeholder(R.drawable.placeholder).into(binding.imageViewProductImage)
+        }
         binding.buttonAddToCart.setOnClickListener {
-            val productVariant = this.arguments?.getParcelable<ProductVariantWithImage>("selected") as ProductVariantWithImage
+            val productVariant = this.arguments?.getParcelable<ProductVariant>(SELECTED_VARIANT_KEY) as ProductVariant
             lifecycleScope.launch {
-                viewModel.addToCart(productVariant, product.promotion_price).await().also { message ->
+                viewModel.addToCartAsync(productVariant, product.promotion_price).await().also { message ->
                     it.snackbar(message)
                 }
             }
