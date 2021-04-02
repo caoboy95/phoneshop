@@ -71,7 +71,7 @@
                 android:layout_marginBottom="10sp"
                 android:textColor="@color/font_info"
                 android:autofillHints=""
-                android:inputType="phone"
+                android:inputType="text"
                 />
         </LinearLayout>
 

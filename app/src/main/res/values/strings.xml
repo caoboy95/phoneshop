@@ -53,4 +53,5 @@
     <string name="title_email">Email</string>
     <string name="title_phone">Số điện thoại</string>
     <string name="title_address">Địa chỉ</string>
+    <string name="notify_customer_exist">Số điện thoại của bạn chưa đặt hàng lần nào!</string>
 </resources>

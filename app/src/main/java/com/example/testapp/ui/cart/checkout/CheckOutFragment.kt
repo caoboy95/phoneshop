@@ -186,7 +186,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
                                         override fun onDataChange(snapshotBillDetail: DataSnapshot) {
                                             if (snapshotBillDetail.exists()) {
                                                 if (!customers.contains(customer)) {
-                                                    snapshotBill.ref.child(customer.id.toString()).setValue(customer)
+                                                    snapshotCustomer.ref.child(customer.id.toString()).setValue(customer)
                                                 }
                                                 snapshotBill.ref.child(bill.id.toString()).setValue(bill)
                                                 snapshotProductVariant.children.forEach { dataSnapshot ->
@@ -258,8 +258,13 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
         customers.find { it.phone_number == address.phone }?.let {
             return it
         }
-        val customerID = checkCustomerID(customers, customers.size)
-        return Customer(address.address, time, address.email, address.gender, customerID, 0, address.name, "", address.phone, time)
+        customers.map { it.id }.maxOrNull()?.let {
+            val customerID = checkCustomerID(customers, it+1)
+            return Customer(address.address, time, address.email, address.gender,
+                    customerID, 0, address.name, "", address.phone, time)
+        }
+        return Customer(address.address, time, address.email, address.gender,
+                checkCustomerID(customers, customers.size), 0, address.name, "", address.phone, time)
     }
 
     private fun checkCustomerID(customers: List<Customer>, customerID: Int) : Int {

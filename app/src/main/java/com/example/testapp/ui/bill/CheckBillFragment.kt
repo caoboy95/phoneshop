@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.NavArgs
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fullmvvm.util.Coroutines
@@ -23,6 +24,7 @@ import com.example.testapp.data.repository.CheckBillRepository
 import com.example.testapp.databinding.CheckBillFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.handleApiError
+import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 
 class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBinding, CheckBillRepository>() {
@@ -31,6 +33,12 @@ class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.setNotifyInterface(object : CheckBillViewModel.NotifyCustomerExist {
+            override fun notifyHaveNoCustomer() {
+                this@CheckBillFragment.view?.snackbar(resources.getString(R.string.notify_customer_exist))
+                this@CheckBillFragment.findNavController().navigateUp()
+            }
+        })
         viewModel.setData(safeArgs.phone)
         viewModel.billsFB.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -38,21 +46,6 @@ class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBind
                 binding.progressBar.visible(false)
             }
         })
-//        viewModel.bills.observe(viewLifecycleOwner, Observer {
-//            when(it){
-//                is Resource.Success -> {
-//                    updateUI(it.value.billsWithCustomer)
-//                    binding.progressBar.visible(false)
-//                }
-//                is Resource.Loading -> {
-//                    binding.progressBar.visible(true)
-//                }
-//                is Resource.Failure -> {
-//                    binding.progressBar.visible(false)
-//                    this.handleApiError(it)
-//                }
-//            }
-//        })
     }
 
     private fun updateUI(billsWithCustomer: BillsWithCustomer) {
@@ -66,7 +59,6 @@ class CheckBillFragment : BaseFragment<CheckBillViewModel, CheckBillFragmentBind
             override fun onBillClickListener(bill: Bill) {
                 this@CheckBillFragment.view?.findNavController()?.navigate(CheckBillFragmentDirections.actionCheckBillFragmentToCheckBillDetailFragment(bill))
             }
-
         })
         mAdapter.setData(billAndQuantity)
         binding.recyclerViewCheckBillItem.apply {

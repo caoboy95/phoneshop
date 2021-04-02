@@ -30,6 +30,7 @@ class CheckBillViewModel(
     val bills: LiveData<Resource<BillResponse>>
         get() = _bills
     private lateinit var phone: String
+    private lateinit var notifyCustomerExist: NotifyCustomerExist
 
     fun setData(phone: String) {
         this.phone=phone
@@ -48,36 +49,38 @@ class CheckBillViewModel(
         repository.getCustomerFromFirebase(phone).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshotCustomer: DataSnapshot) {
                 val customers = snapshotCustomer.getDataValue(Customer::class.java)
+                if (customers.isNotEmpty()) {
+                    repository.getBillsFromFirebase(customers[0].id).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshotBill: DataSnapshot) {
+                            val bills = snapshotBill.getDataValue(Bill::class.java)
+                            var billAndQuantities = mutableListOf<BillAndQuantity>()
 
-                repository.getBillsFromFirebase(customers[0].id).addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshotBill: DataSnapshot) {
-                        val bills = snapshotBill.getDataValue(Bill::class.java)
-                        var billAndQuantities = mutableListOf<BillAndQuantity>()
-
-                        bills.forEach { bill ->
-                            repository.getBillDetailsFromFirebase(bill.id).addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(snapshotBillDetail: DataSnapshot) {
-                                    val billDetails = snapshotBillDetail.getDataValue(BillDetail::class.java)
-                                    val quantity = billDetails.map { it.quantity }.sum()
-                                    billAndQuantities.add(BillAndQuantity(bill, quantity))
-                                    if (bills.last() == bill) {
-                                        _billsFB.value = BillsWithCustomer(billAndQuantities, customers[0])
+                            bills.forEach { bill ->
+                                repository.getBillDetailsFromFirebase(bill.id).addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshotBillDetail: DataSnapshot) {
+                                        val billDetails = snapshotBillDetail.getDataValue(BillDetail::class.java)
+                                        val quantity = billDetails.map { it.quantity }.sum()
+                                        billAndQuantities.add(BillAndQuantity(bill, quantity))
+                                        if (bills.last() == bill) {
+                                            _billsFB.value = BillsWithCustomer(billAndQuantities, customers[0])
+                                        }
                                     }
-                                }
 
-                                override fun onCancelled(error: DatabaseError) {
-                                    Log.e(TAG, "Error: $error")
-                                }
-                            })
+                                    override fun onCancelled(error: DatabaseError) {
+                                        Log.e(TAG, "Error: $error")
+                                    }
+                                })
+                            }
                         }
-                    }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.e(TAG, "Error: $error")
-                    }
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e(TAG, "Error: $error")
+                        }
 
-                })
-
+                    })
+                    return
+                }
+                notifyCustomerExist.notifyHaveNoCustomer()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -86,6 +89,15 @@ class CheckBillViewModel(
 
         })
     }
+
+    fun setNotifyInterface(notifyCustomerExist: NotifyCustomerExist) {
+        this.notifyCustomerExist = notifyCustomerExist
+    }
+
+    interface NotifyCustomerExist {
+        fun notifyHaveNoCustomer()
+    }
+
     companion object {
         private const val TAG = "CheckBillViewModel"
     }
