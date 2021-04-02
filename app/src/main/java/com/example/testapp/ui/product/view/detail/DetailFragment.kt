@@ -1,9 +1,7 @@
 package com.example.testapp.ui.product.view.detail
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -11,23 +9,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.fullmvvm.util.snackbar
-import com.example.testapp.Constant
 import com.example.testapp.Constant.SELECTED_VARIANT_KEY
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Product
 import com.example.testapp.data.db.entities.ProductVariant
-import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.network.ProductApi
-import com.example.testapp.data.network.Resource
 import com.example.testapp.data.repository.ProductDetailRepository
-import com.example.testapp.data.response.ProductDetailResponse
 import com.example.testapp.databinding.FragmentDetailBinding
 import com.example.testapp.ui.base.BaseFragment
-import com.example.testapp.ui.handleApiError
 import com.example.testapp.ui.product.adapter.DetailProductPagerAdapter
 import com.example.testapp.ui.product.viewmodel.ProductDetailViewModel
+import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch

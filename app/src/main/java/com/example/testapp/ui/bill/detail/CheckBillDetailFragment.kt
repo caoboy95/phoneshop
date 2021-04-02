@@ -1,9 +1,7 @@
 package com.example.testapp.ui.bill.detail
 
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,23 +12,25 @@ import com.example.testapp.R
 import com.example.testapp.data.db.entities.BillDetailsInfo
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.network.ProductApi
-import com.example.testapp.data.network.Resource
 import com.example.testapp.data.repository.CheckBillDetailRepository
 import com.example.testapp.data.response.BillDetailResponse
 import com.example.testapp.databinding.CheckBillDetailFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
-import com.example.testapp.ui.handleApiError
+import com.example.testapp.ui.formatCurrency
+import com.example.testapp.ui.visible
 
 class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBillDetailFragmentBinding, CheckBillDetailRepository>() {
 
-    val safeArgs: CheckBillDetailFragmentArgs by navArgs()
-    val checkBillDetailAdapter = CheckBillDetailAdapter()
+    private val safeArgs: CheckBillDetailFragmentArgs by navArgs()
+    private var checkBillDetailAdapter: CheckBillDetailAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setData(safeArgs.bill)
+        binding.progressBar.visible(true)
         viewModel.billDetailsFB.observe(viewLifecycleOwner, Observer {
             updateUI(it)
+            binding.progressBar.visible(false)
         })
 //        viewModel.billDetail.observe(viewLifecycleOwner, Observer {
 //            when(it){
@@ -47,29 +47,33 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBill
     }
 
     private fun updateUI(billDetail: BillDetailResponse) {
-        binding.textViewCheckBillDetailId.text = "#${viewModel.bill.id}"
+        val title = "#${viewModel.bill.id}"
+        binding.textViewCheckBillDetailId.text = title
         binding.textViewCheckBillDetailDate.text = viewModel.bill.date_order
-        binding.textViewCheckBillDetailStatus.text = when(viewModel.bill.status){
-            0 -> {
-                binding.textViewCheckBillDetailStatus.setBackgroundColor(Color.parseColor("#D3A419"))
-                "Chưa Giao Hàng" }
-            1 -> {
-                binding.textViewCheckBillDetailStatus.setBackgroundColor(Color.parseColor("#D80000"))
-                "Đã Hủy" }
-            2 -> {
-                binding.textViewCheckBillDetailStatus.setBackgroundColor(Color.parseColor("#06CF0E"))
-                "Đã Giao Hàng" }
-            else -> "Không"
-        }
+        binding.textViewCheckBillDetailTotal.text = formatCurrency(viewModel.bill.total)
+        binding.textViewCheckBillDetailStatus.text =
+            when(viewModel.bill.status) {
+                UNDELIVERED -> {
+                    binding.textViewCheckBillDetailStatus.setBackgroundColor(Color.parseColor("#D3A419"))
+                    context?.resources?.getString(R.string.undelivered) }
+                CANCELLED -> {
+                    binding.textViewCheckBillDetailStatus.setBackgroundColor(Color.parseColor("#D80000"))
+                    "Đã Hủy" }
+                DELIVERED -> {
+                    binding.textViewCheckBillDetailStatus.setBackgroundColor(Color.parseColor("#06CF0E"))
+                    "Đã Giao Hàng" }
+                else -> "Không"
+            }
         initRecyclerView(billDetail.billDetailsInfo)
     }
 
     private fun initRecyclerView(billDetailsInfo: List<BillDetailsInfo>) {
-        checkBillDetailAdapter.setData(billDetailsInfo)
+        checkBillDetailAdapter = CheckBillDetailAdapter(viewModel.getRepository())
+        checkBillDetailAdapter?.setData(billDetailsInfo)
         binding.recyclerViewCheckBillDetailItem.apply {
-            layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
-            adapter= checkBillDetailAdapter
+            adapter = checkBillDetailAdapter
         }
     }
 
@@ -82,5 +86,11 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBill
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): CheckBillDetailRepository =
         CheckBillDetailRepository(remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor))
+
+    companion object {
+        private const val UNDELIVERED = 0
+        private const val DELIVERED = 2
+        private const val CANCELLED = 1
+    }
 
 }

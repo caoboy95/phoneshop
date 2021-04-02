@@ -107,30 +107,10 @@ class CartRepository(
         })
     }
 
-    fun getProductFromFirebase(productID: Int) =
+    private fun getProductFromFirebase(productID: Int) =
             firebaseDatabase.getReference(NODE_PRODUCTS).orderByChild("id").equalTo(productID.toDouble())
 
     private fun getProductVariant() = firebaseDatabase.getReference(NODE_PRODUCT_VARIANTS)
-
-    fun checkOut(cart: Cart, addressCustomer: AddressCustomer) {
-        getProductVariant().addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    snapshot.children.map {
-                        it.getValue(ProductVariant::class.java)
-                    }.let {
-
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(TAG,"Error: $error")
-            }
-
-        })
-
-    }
 
     fun getCustomers() = firebaseDatabase.getReference(Constant.NODE_CUSTOMERS).orderByChild("id")
 

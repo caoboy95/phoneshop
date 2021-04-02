@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import com.example.fullmvvm.util.snackbar
 import com.example.testapp.data.db.entities.AddressCustomer
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddAddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.snackbar
 
 
 class AddAddressFragment : BaseFragment<AddressViewModel,AddAddressFragmentBinding,AddressRepository>() {

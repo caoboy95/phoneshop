@@ -26,6 +26,7 @@
             android:text="Thông Tin Khách Hàng"
             android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/font_info"
             android:gravity="center"/>
 
         <TextView
@@ -35,7 +36,9 @@
             android:layout_below="@id/text_view_check_bill_title"
             android:text="@{customer.name}"
             android:textSize="15sp"
-            android:hint="Tên"/>
+            tools:text="###########"
+            android:textColor="@color/font_info"
+            />
 
         <TextView
             android:id="@+id/text_view_check_bill_gender"
@@ -43,7 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_check_bill_name"
             android:text="@{customer.gender}"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Gender: ####"
+            android:textColor="@color/font_info"/>
 
         <TextView
             android:id="@+id/text_view_check_bill_email"
@@ -51,7 +56,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_check_bill_gender"
             android:text="@{customer.email}"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Email: ########"
+            android:textColor="@color/font_info"/>
 
         <TextView
             android:id="@+id/text_view_check_bill_phone"
@@ -59,7 +66,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_check_bill_email"
             android:text="@{customer.phone_number}"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Phone: ##########"
+            android:textColor="@color/font_info"/>
 
         <TextView
             android:id="@+id/text_view_check_bill_address"
@@ -67,7 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_check_bill_phone"
             android:text="@{customer.address}"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            tools:text="Address: ##########"
+            android:textColor="@color/font_info"/>
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_check_bill_item"

@@ -50,11 +50,6 @@
             app:popUpTo="@id/billFragment" />
     </fragment>
     <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.example.testapp.ui.setting.SettingFragment"
-        android:label="Cài Đặt"
-        tools:layout="@layout/fragment_setting" />
-    <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.testapp.ui.cart.CartFragment"
         android:label="Giỏ Hàng" >

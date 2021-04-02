@@ -2,6 +2,7 @@ package com.example.testapp.ui.cart.checkout
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fullmvvm.util.snackbar
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.*
 import com.example.testapp.data.network.NetworkConnectionInterceptor
@@ -21,6 +21,7 @@ import com.example.testapp.databinding.CheckOutFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.getDataValue
+import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -177,7 +178,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
                                                         binding.progressBar.visible(false)
                                                     }
                                                 })
-                                                return
+                                                return //skip below code if out of stock
                                             }
                                         }
                                     }
@@ -195,18 +196,20 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
                                                         }
                                                     }
                                                 }
+                                                val billDetails = snapshotBillDetail.getDataValue(BillDetail::class.java)
+                                                var billDetailID = checkBillDetailID(billDetails, billDetails.size)
                                                 cart.items?.cartItems?.forEach { cartItem ->
-                                                    val billDetails = snapshotBillDetail.getDataValue(BillDetail::class.java)
-                                                    val billDetailID = checkBillDetailID(billDetails, billDetails.size)
                                                     val billDetail = BillDetail(time, billDetailID, bill.id, cartItem.item.id,
                                                             cartItem.quantity, cartItem.price, time)
                                                     snapshotBillDetail.ref.child(billDetail.id.toString()).setValue(billDetail)
+                                                    billDetailID++
                                                 }
                                                 this@CheckOutFragment.view?.snackbar(NOTIFY_SUCCESS)
                                                 binding.progressBar.visible(false)
                                                 viewModel.removeCart(cart)
                                                 val action = CheckOutFragmentDirections.actionCheckOutFragmentToCheckOutNotifyFragment(bill.id, CartAndAddress(cart, address))
                                                 this@CheckOutFragment.findNavController().navigate(action)
+                                                return
                                             }
                                             this@CheckOutFragment.view?.snackbar(NOTIFY_ERROR)
                                             binding.progressBar.visible(false)
@@ -214,6 +217,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
 
                                         override fun onCancelled(error: DatabaseError) {
                                             this@CheckOutFragment.view?.snackbar(NOTIFY_ERROR)
+                                            Log.e(TAG, "Error: $error")
                                             binding.progressBar.visible(false)
                                         }
 
@@ -226,6 +230,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
 
                             override fun onCancelled(error: DatabaseError) {
                                 this@CheckOutFragment.view?.snackbar(NOTIFY_ERROR)
+                                Log.e(TAG, "Error: $error")
                                 binding.progressBar.visible(false)
                             }
 
@@ -234,6 +239,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
 
                     override fun onCancelled(error: DatabaseError) {
                         this@CheckOutFragment.view?.snackbar(NOTIFY_ERROR)
+                        Log.e(TAG, "Error: $error")
                         binding.progressBar.visible(false)
                     }
 
@@ -242,6 +248,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
 
             override fun onCancelled(error: DatabaseError) {
                 this@CheckOutFragment.view?.snackbar(NOTIFY_ERROR)
+                Log.e(TAG, "Error: $error")
                 binding.progressBar.visible(false)
             }
         })
@@ -290,6 +297,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
             CartRepository(db, remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor))
 
     companion object {
+        private const val TAG = "CheckOutFragment"
         private const val NOTIFY_REQUIRED_ADDRESS = "Vui Lòng Nhập Địa Chỉ!"
         private const val NOTIFY_CHECK_INFO = "Hãy kiểm tra thông tin trước khi đặt hàng!"
         private const val NOTIFY_CART_NOTHING = "Giỏ hàng không có sản phẩm!"

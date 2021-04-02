@@ -1,5 +1,6 @@
 package com.example.testapp.ui.bill.detail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,18 +16,21 @@ import java.util.*
 
 class CheckBillDetailAdapter(val repository: CheckBillDetailRepository) : RecyclerView.Adapter<CheckBillDetailAdapter.CheckBillDetailHolder>() {
 
-    private lateinit var billDetailsInfo: List<BillDetailsInfo>
+    private lateinit var billDetailsInfos: List<BillDetailsInfo>
 
-    fun setData(billDetailsInfo: List<BillDetailsInfo>) {
-        this.billDetailsInfo = billDetailsInfo
+    fun setData(billDetailsInfos: List<BillDetailsInfo>) {
+        this.billDetailsInfos = billDetailsInfos
+//        Log.e(TAG, "$billDetailsInfos size = ${billDetailsInfos.size}")
         notifyDataSetChanged()
     }
 
     class CheckBillDetailHolder(val binding: CheckBillDetailItemAdapterBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(billDetailsInfo: BillDetailsInfo) {
+        fun bind(billDetailsInfo: BillDetailsInfo, repository: CheckBillDetailRepository) {
+//            Log.e(TAG, "bind $billDetailsInfo")
             binding.billDetailsInfo = billDetailsInfo
-            val uri = Constant.URL_IMAGE+"product/"+billDetailsInfo.image.link
-            Picasso.get().load(uri).into(binding.imageViewProduct)
+            repository.getProductImageFromFirebase(billDetailsInfo.image.link).addOnSuccessListener {
+                Picasso.get().load(it).into(binding.imageViewProduct)
+            }
             binding.textViewProductPrice.text = formatCurrency(billDetailsInfo.price)
         }
     }
@@ -38,8 +42,13 @@ class CheckBillDetailAdapter(val repository: CheckBillDetailRepository) : Recycl
     }
 
     override fun onBindViewHolder(holder: CheckBillDetailHolder, position: Int) {
-        holder.bind(billDetailsInfo[position])
+        holder.bind(billDetailsInfos[position], repository)
+//        Log.e(TAG, "bind ${billDetailsInfos.size} position $position")
     }
 
-    override fun getItemCount(): Int = billDetailsInfo.size
+    override fun getItemCount(): Int = billDetailsInfos.size
+
+    companion object {
+        private const val TAG = "CheckBillDetailAdapter"
+    }
 }

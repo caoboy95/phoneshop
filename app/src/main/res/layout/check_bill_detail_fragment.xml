@@ -6,17 +6,26 @@
             name="bill"
             type="com.example.testapp.data.db.entities.Bill" />
     </data>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.bill.CheckBillFragment"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+        <ProgressBar
+            android:id="@id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            />
 
         <RelativeLayout
+            android:id="@+id/layout_bill_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:background="@color/background_gray">
+            android:background="@color/background_gray"
+            >
 
             <TextView
                 android:id="@+id/text_view_check_bill_title"
@@ -31,66 +40,75 @@
                 android:id="@+id/text_view_check_bill_detail_id"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_title"
-                android:hint="Tên"
-
+                android:text="@string/default_id"
+                android:textColor="@color/font_info"
                 />
 
             <TextView
                 android:id="@+id/text_view_check_bill_detail_title_date"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_id"
-                android:text="Ngày Đặt:" />
+                android:text="@string/title_date"
+                android:textColor="@color/font_info"/>
 
             <TextView
                 android:id="@+id/text_view_check_bill_detail_date"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_id"
-                android:text="20/10/2020"
-                android:layout_marginStart="74sp"/>
+                android:text="@string/default_date"
+                android:layout_marginStart="74sp"
+                android:textColor="@color/font_info"/>
 
             <TextView
                 android:id="@+id/text_view_check_bill_detail_title_total"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_title_date"
-                android:text="Tổng Tiền:"/>
+                android:text="Tổng Tiền:"
+                android:textColor="@color/font_info"/>
 
             <TextView
                 android:id="@+id/text_view_check_bill_detail_total"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_title_date"
-                android:text="100.000.000đ"
-                android:layout_marginStart="74sp" />
+                android:text="@string/default_cost"
+                android:layout_marginStart="74sp"
+                android:textColor="@color/font_info"/>
             <TextView
                 android:id="@+id/text_view_check_bill_detail_status"
                 android:gravity="center"
                 android:padding="5sp"
                 android:layout_width="130sp"
                 android:layout_height="wrap_content"
-                android:text="Chưa Giao Hàng"
+                android:text="@string/undelivered"
                 android:layout_marginBottom="10sp"
                 android:background="@color/undelivery"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/text_view_check_bill_title"
-                android:layout_marginTop="10sp"/>
+                android:layout_marginTop="10sp"
+                />
             <TextView
                 android:id="@+id/text_view_check_bill_detail_title_payment"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_status"
                 android:layout_alignParentEnd="true"
-                android:text="Thanh Toán"/>
+                android:text="@string/title_payment"
+                android:textColor="@color/font_info"
+                />
             <TextView
                 android:id="@+id/text_view_check_bill_detail_payment"
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_title_payment"
                 android:layout_alignParentEnd="true"
-                android:text="COD"/>
+                android:text="@string/default_payment"
+                android:textColor="@color/font_info"/>
         </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_check_bill_detail_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/check_bill_detail_item_adapter"
+            android:layout_below="@id/layout_bill_info"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

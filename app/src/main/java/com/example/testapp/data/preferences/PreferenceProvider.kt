@@ -2,10 +2,14 @@ package net.simplifiedcoding.mvvmsampleapp.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 //make data store to save  and retrieve values
-//class PreferenceProvider(
+//class DataStorePreferenceProvider(
 //    context: Context
 //) {
 //    private val applicationContext = context.applicationContext
@@ -51,6 +55,7 @@ import androidx.preference.PreferenceManager
 //        private val KEY_SAVED_AT= stringPreferencesKey("key_saved_at")
 //    }
 //}
+
 private const val KEY_SAVED_AT = "key_saved_at"
 
 class PreferenceProvider(

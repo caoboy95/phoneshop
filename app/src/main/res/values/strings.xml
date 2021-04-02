@@ -24,7 +24,7 @@
     <string name="preview_button">Xem Ngay</string>
     <string name="title_information">Thông Tin</string>
     <string name="title_description">Mô Tả</string>
-    <string name="title_quality">Số lượng</string>
+    <string name="title_quantity">Số lượng</string>
     <string name="default_quality">1</string>
     <string name="title_price">Giá</string>
     <string name="delete">Xóa</string>
@@ -38,4 +38,19 @@
     <string name="title_total_price">Tổng Tiền:</string>
     <string name="default_phone_check_bill">0903831922</string>
     <string name="button_check_bill">Kiểm Tra</string>
+    <string name="default_id">#26</string>
+    <string name="default_date">##/##/####</string>
+    <string name="title_date">Ngày Đặt:</string>
+    <string name="undelivered">Chưa Giao Hàng</string>
+    <string name="delivered">Đã Giao Hàng</string>
+    <string name="cancelled">Đã Hủy</string>
+    <string name="title_payment">Thanh Toán</string>
+    <string name="default_payment">COD</string>
+    <string name="button_detail">Chi Tiết</string>
+    <string name="title_total">Tổng Tiền:</string>
+    <string name="male">Nam</string>
+    <string name="female">Nữ</string>
+    <string name="title_email">Email</string>
+    <string name="title_phone">Số điện thoại</string>
+    <string name="title_address">Địa chỉ</string>
 </resources>

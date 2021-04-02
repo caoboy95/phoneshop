@@ -49,7 +49,6 @@ class CheckBillDetailViewModel(
             override fun onDataChange(snapshot: DataSnapshot) {
                 val billDetails = snapshot.getDataValue(BillDetail::class.java)
                 val billDetailsInfo = mutableListOf<BillDetailsInfo>()
-
                 billDetails.forEach { billDetail ->
                     repository.getProductVariantOfBill(billDetail.id_product_variant).addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
@@ -66,41 +65,35 @@ class CheckBillDetailViewModel(
                                                     billDetail.unit_price, productVariants.first(), billDetail.quantity))
                                             if (billDetail == billDetails.last()) {
                                                 _billDetailsFB.value = BillDetailResponse(billDetailsInfo)
-                                                Log.e(TAG, "$billDetailsInfo")
                                             }
                                         }
 
                                         override fun onCancelled(error: DatabaseError) {
                                             Log.e(TAG, "Error Image: $error")
                                         }
-
                                     })
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {
                                     Log.e(TAG, "Error Product: $error")
                                 }
-
-
                             })
                         }
 
                         override fun onCancelled(error: DatabaseError) {
                             Log.e(TAG, "Error ProductVariant: $error")
                         }
-
                     })
-
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e(TAG, "Error BillDetail: $error")
             }
-
         })
     }
+
+    fun getRepository() = repository
 
     companion object {
         private const val TAG = "CheckBillDetailVM"

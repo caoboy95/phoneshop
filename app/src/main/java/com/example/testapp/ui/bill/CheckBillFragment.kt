@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fullmvvm.util.Coroutines
-import com.example.fullmvvm.util.snackbar
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Bill
 import com.example.testapp.data.db.entities.BillAndQuantity

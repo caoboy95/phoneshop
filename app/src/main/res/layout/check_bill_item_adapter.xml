@@ -19,42 +19,49 @@
             <TextView
                 android:id="@+id/text_view_check_bill_item_id"
                 style="@style/InformationTextView"
-                android:text="#21"/>
+                android:text="@string/default_id"
+                android:textColor="@color/font_info"/>
             <TextView
                 android:id="@+id/text_view_check_bill_title_date"
                 style="@style/InformationTextView"
-                android:text="Ngày Đặt:"
-                android:layout_below="@id/text_view_check_bill_item_id"/>
+                android:text="@string/title_date"
+                android:layout_below="@id/text_view_check_bill_item_id"
+                android:textColor="@color/font_info"/>
             <TextView
                 android:id="@+id/text_view_check_bill_item_date"
                 style="@style/InformationTextView"
-                android:text="20/10/2020"
+                android:text="@string/default_date"
                 android:layout_below="@id/text_view_check_bill_item_id"
                 android:layout_marginStart="74sp"
+                android:textColor="@color/font_info"
                 />
             <TextView
                 android:id="@+id/text_view_check_bill_title_quantity"
                 style="@style/InformationTextView"
-                android:text="Số Lượng:"
-                android:layout_below="@id/text_view_check_bill_title_date"/>
+                android:text="@string/title_quantity"
+                android:layout_below="@id/text_view_check_bill_title_date"
+                android:textColor="@color/font_info"/>
             <TextView
                 android:id="@+id/text_view_check_bill_item_quantity"
                 style="@style/InformationTextView"
-                android:text="10"
+                android:text="@string/default_quality"
                 android:layout_below="@id/text_view_check_bill_title_date"
                 android:layout_marginStart="74sp"
+                android:textColor="@color/font_info"
                 />
             <TextView
                 android:id="@+id/text_view_check_bill_title_total"
                 style="@style/InformationTextView"
-                android:text="Tổng Tiền:"
-                android:layout_below="@id/text_view_check_bill_title_quantity"/>
+                android:text="@string/title_total"
+                android:layout_below="@id/text_view_check_bill_title_quantity"
+                android:textColor="@color/font_info"/>
             <TextView
                 android:id="@+id/text_view_check_bill_item_total"
                 style="@style/InformationTextView"
-                android:text="100.000.000đ"
+                android:text="@string/default_cost"
                 android:layout_below="@id/text_view_check_bill_title_quantity"
                 android:layout_marginStart="74sp"
+                android:textColor="@color/font_info"
                 />
             <TextView
                 android:id="@+id/text_view_check_bill_item_status"
@@ -62,17 +69,18 @@
                 android:padding="5sp"
                 android:layout_width="130sp"
                 android:layout_height="wrap_content"
-                android:text="Chưa Giao Hàng"
+                android:text="@string/undelivered"
                 android:layout_marginBottom="10sp"
                 android:background="@color/undelivery"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/text_view_check_bill_item_id"
-                android:layout_marginStart="74sp"/>
+                android:layout_marginStart="74sp"
+                android:textColor="@color/font_info"/>
             <Button
                 android:id="@+id/button_check_bill_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="40sp"
-                android:text="Chi Tiết"
+                android:text="@string/button_detail"
                 android:textSize="10sp"
                 android:background="@drawable/button_custom"
                 android:layout_alignParentEnd="true"

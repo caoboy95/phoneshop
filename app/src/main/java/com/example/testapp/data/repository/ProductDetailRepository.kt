@@ -1,5 +1,6 @@
 package com.example.testapp.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.testapp.Constant.NODE_PRODUCTS
 import com.example.testapp.Constant.NODE_PRODUCT_VARIANTS
@@ -32,9 +33,11 @@ class ProductDetailRepository(
     suspend fun addToCart(productVariant: ProductVariant, promotionPrice: Int) :String {
         return withContext(Dispatchers.IO) {
             try {
+                Log.e("productdetailrepo", "${db.getCartDao().getCart()}")
                 if(productVariant.quantity != 0) {
                     if (db.getCartDao().getCart() != null) {
                         cart = db.getCartDao().getCart()
+
                     } else {
                         cart = Cart(0, null, 0, 0)
                     }

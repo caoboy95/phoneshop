@@ -1,9 +1,12 @@
 package com.example.testapp.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.testapp.R
 import com.example.testapp.data.network.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -57,12 +60,21 @@ fun Fragment.handleApiError(
     }
 }
 
+fun Context.getResColor(colorID: Int) : Int {
+    return ContextCompat.getColor(this, colorID)
+}
+
 fun View.snackbar(message: String, action: (() -> Unit)? = null) {
-    val snackbar = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
-    action?.let {
-        snackbar.setAction("Retry") {
-            it()
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).apply {
+        setBackgroundTint(this.view?.context.getResColor(R.color.colorPrimary))
+        action?.let {
+            setAction("Retry") {
+                action()
+            }
+            return
         }
-    }
-    snackbar.show()
+        setAction("OK") {
+            dismiss()
+        }
+    }.show()
 }
