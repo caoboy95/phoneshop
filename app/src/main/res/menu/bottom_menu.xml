@@ -9,12 +9,4 @@
         android:id="@+id/billFragment"
         android:title="Đơn Hàng"
         android:icon="@drawable/ic_baseline_wysiwyg_24" />
-    <item
-        android:id="@+id/profileFragment"
-        android:title="Profile"
-        android:icon="@drawable/ic_baseline_settings_24" />
-    <item
-        android:id="@+id/settingFragment"
-        android:title="Setting"
-        android:icon="@drawable/ic_baseline_table_rows_24" />
 </menu>
