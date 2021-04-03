@@ -6,4 +6,5 @@ import com.example.testapp.ui.base.BaseViewModel
 class BillViewModel(
     private val repository: BillRepository
 ) : BaseViewModel(repository) {
+    fun getCustomer(phone: String) = repository.getCustomer(phone)
 }

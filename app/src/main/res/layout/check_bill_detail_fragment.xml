@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:background="@color/background_gray"
+            android:background="#EFEFEF"
             >
 
             <TextView
@@ -71,7 +71,7 @@
                 style="@style/InformationTextView"
                 android:layout_below="@id/text_view_check_bill_detail_title_date"
                 android:text="@string/default_cost"
-                android:layout_marginStart="74sp"
+                android:layout_marginStart="80sp"
                 android:textColor="@color/font_info"/>
             <TextView
                 android:id="@+id/text_view_check_bill_detail_status"
@@ -89,16 +89,17 @@
             <TextView
                 android:id="@+id/text_view_check_bill_detail_title_payment"
                 style="@style/InformationTextView"
-                android:layout_below="@id/text_view_check_bill_detail_status"
-                android:layout_alignParentEnd="true"
+                android:layout_below="@id/text_view_check_bill_detail_title_total"
+                android:layout_alignParentStart="true"
                 android:text="@string/title_payment"
                 android:textColor="@color/font_info"
                 />
             <TextView
                 android:id="@+id/text_view_check_bill_detail_payment"
                 style="@style/InformationTextView"
-                android:layout_below="@id/text_view_check_bill_detail_title_payment"
-                android:layout_alignParentEnd="true"
+                android:layout_below="@id/text_view_check_bill_detail_title_total"
+                android:layout_alignStart="@id/text_view_check_bill_detail_title_payment"
+                android:layout_marginStart="90sp"
                 android:text="@string/default_payment"
                 android:textColor="@color/font_info"/>
         </RelativeLayout>

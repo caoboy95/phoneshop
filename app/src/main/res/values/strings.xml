@@ -38,13 +38,13 @@
     <string name="title_total_price">Tổng Tiền:</string>
     <string name="default_phone_check_bill">0903831922</string>
     <string name="button_check_bill">Kiểm Tra</string>
-    <string name="default_id">#26</string>
+    <string name="default_id">#00</string>
     <string name="default_date">##/##/####</string>
     <string name="title_date">Ngày Đặt:</string>
     <string name="undelivered">Chưa Giao Hàng</string>
     <string name="delivered">Đã Giao Hàng</string>
     <string name="cancelled">Đã Hủy</string>
-    <string name="title_payment">Thanh Toán</string>
+    <string name="title_payment">Thanh Toán:</string>
     <string name="default_payment">COD</string>
     <string name="button_detail">Chi Tiết</string>
     <string name="title_total">Tổng Tiền:</string>

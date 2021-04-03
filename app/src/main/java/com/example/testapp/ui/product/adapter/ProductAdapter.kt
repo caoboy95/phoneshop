@@ -52,7 +52,7 @@ class ProductAdapter(
         fun bind(product: Product, productRepository: ProductRepository) {
             binding.product = product
             val price = formatCurrency(product.unit_price) +
-                    if(product.promotion_price != 0) " (Sale ${product.promotion_price}%)" else ""
+                    if(product.promotion_price != 0) " (-${product.promotion_price}%)" else ""
             binding.textViewProductPrice.text = price
             getBrands(product.id_company, productRepository)
             productRepository.getProductImageFromFirebase(product.image).addOnSuccessListener {

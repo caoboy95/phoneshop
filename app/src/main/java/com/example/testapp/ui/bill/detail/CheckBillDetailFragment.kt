@@ -27,6 +27,7 @@ class CheckBillDetailFragment : BaseFragment<CheckBillDetailViewModel, CheckBill
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.setData(safeArgs.bill)
+        binding.progressBar.bringToFront()
         binding.progressBar.visible(true)
         viewModel.billDetailsFB.observe(viewLifecycleOwner, Observer {
             updateUI(it)

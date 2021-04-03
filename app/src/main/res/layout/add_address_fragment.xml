@@ -6,7 +6,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cart.checkout.address.AddAddressFragment">
+    tools:context=".ui.cart.checkout.address.AddAddressFragment"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
@@ -17,7 +18,10 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true">
             <EditText
                 android:id="@+id/edit_text_customer_name"
                 android:layout_width="match_parent"
@@ -37,7 +41,8 @@
                     android:id="@+id/radio_button_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/male"/>
+                    android:text="@string/male"
+                    android:focusable="true"/>
                 <RadioButton
                     android:id="@+id/radio_button_female"
                     android:layout_marginStart="20sp"
@@ -81,6 +86,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Lưu"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10sp"
+        android:layout_marginStart="10sp"
+        />
 </RelativeLayout>
 </layout>

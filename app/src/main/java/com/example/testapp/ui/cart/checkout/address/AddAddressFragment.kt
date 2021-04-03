@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.example.testapp.data.db.entities.AddressCustomer
 import com.example.testapp.data.network.NetworkConnectionInterceptor
@@ -31,10 +33,37 @@ class AddAddressFragment : BaseFragment<AddressViewModel,AddAddressFragmentBindi
                 binding.editTextCustomerAddress.text.toString(),
                 gender
             )
+            if (address.address.isNullOrBlank() || address.email.isNullOrBlank() || address.name.isNullOrBlank() || address.phone.isNullOrBlank()) {
+                this.view?.snackbar("Giá trị không được để trống")
+                return@setOnClickListener
+            }
             viewModel.addAddress(address)
             this.view?.snackbar("Thêm Thành Công")
             this.view?.findNavController()?.navigateUp()
         }
+        setFocusEditText()
+    }
+
+    fun setFocusEditText() {
+        val focusListener = object : View.OnFocusChangeListener {
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (!hasFocus) {
+                    v?.let {
+                        hideKeyboard(v)
+                    }
+                }
+            }
+        }
+        binding.editTextCustomerAddress.setOnFocusChangeListener(focusListener)
+        binding.editTextCustomerEmail.setOnFocusChangeListener(focusListener)
+        binding.editTextCustomerName.setOnFocusChangeListener(focusListener)
+        binding.editTextCustomerPhone.setOnFocusChangeListener(focusListener)
+    }
+
+    fun hideKeyboard(view: View) {
+        val inputMethodManager =
+            ContextCompat.getSystemService(this.requireContext(), InputMethodManager::class.java)
+        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun getFragmentBinding(

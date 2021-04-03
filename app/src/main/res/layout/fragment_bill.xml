@@ -5,13 +5,23 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.testapp.ui.bill.BillFragment">
-
+    tools:context="com.example.testapp.ui.bill.BillFragment"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        />
     <EditText
         android:id="@+id/edit_text_check_bill_phone"
         android:layout_width="150sp"
+        android:hint="Số điện thoại"
         android:layout_height="wrap_content"
-        android:text="@string/default_phone_check_bill"
         android:layout_centerInParent="true"
         android:textColor="@color/font_info"
         android:autofillHints=""
