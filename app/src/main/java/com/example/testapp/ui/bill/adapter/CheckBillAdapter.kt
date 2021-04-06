@@ -1,19 +1,13 @@
-package com.example.testapp.ui.bill
+package com.example.testapp.ui.bill.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.R
 import com.example.testapp.data.db.entities.Bill
 import com.example.testapp.data.db.entities.BillAndQuantity
 import com.example.testapp.databinding.CheckBillItemAdapterBinding
 import com.example.testapp.ui.formatCurrency
-import java.text.NumberFormat
-import java.util.*
 
 class CheckBillAdapter : RecyclerView.Adapter<CheckBillAdapter.CheckBillViewHolder>() {
 

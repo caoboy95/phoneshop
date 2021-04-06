@@ -1,6 +1,5 @@
-package com.example.testapp.ui.bill
+package com.example.testapp.ui.bill.view
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.Customer
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.repository.BillRepository
 import com.example.testapp.databinding.FragmentBillBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.bill.viewmodel.BillViewModel
 import com.example.testapp.ui.getDataValue
 import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
@@ -40,9 +38,9 @@ class BillFragment : BaseFragment<BillViewModel, FragmentBillBinding, BillReposi
                     val customers = snapshot.getDataValue(Customer::class.java)
                     if (customers.isNotEmpty()) {
                         it.findNavController().navigate(
-                            BillFragmentDirections.actionBillFragmentToCheckBillFragment(
-                                binding.editTextCheckBillPhone.text.toString()
-                            )
+                                BillFragmentDirections.actionBillFragmentToCheckBillFragment(
+                                        binding.editTextCheckBillPhone.text.toString()
+                                )
                         )
                         binding.progressBar.visible(false)
                         return
@@ -65,11 +63,6 @@ class BillFragment : BaseFragment<BillViewModel, FragmentBillBinding, BillReposi
                 }
             }
         })
-        requireActivity().actionBar?.apply {
-            setHomeButtonEnabled(false)
-            setDisplayHomeAsUpEnabled(false)
-            setDisplayShowHomeEnabled(false)
-        }
     }
 
     fun hideKeyboard(view: View) {

@@ -6,7 +6,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cart.checkout.address.AddAddressFragment"
+    tools:context=".ui.cart.view.checkout.address.AddAddressFragment"
     >
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/button_save_address"
-        android:padding="20sp">
+        android:padding="20sp"
+        >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

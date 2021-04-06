@@ -1,7 +1,6 @@
-package com.example.testapp.ui.cart.checkout.address
+package com.example.testapp.ui.cart.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.data.db.entities.AddressCustomer

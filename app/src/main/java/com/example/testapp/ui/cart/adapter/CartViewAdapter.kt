@@ -1,22 +1,18 @@
-package com.example.testapp.ui.cart
+package com.example.testapp.ui.cart.adapter
 
-import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.Constant
-import com.example.testapp.R
 import com.example.testapp.data.db.entities.*
 import com.example.testapp.data.repository.CartRepository
 import com.example.testapp.databinding.CartItemAdapterBinding
 import com.example.testapp.ui.formatCurrency
-import com.google.firebase.database.ChildEventListener
+import com.example.testapp.ui.getDataValue
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import java.text.NumberFormat
-import java.util.*
 
 class CartViewAdapter(
         val repository: CartRepository
@@ -36,11 +32,51 @@ class CartViewAdapter(
         fun bind(cartItem: CartItem, clickListener: ClickListener, repository: CartRepository) {
             binding.cartItem = cartItem
             binding.textViewProductPrice.text = formatCurrency(cartItem.price)
-            repository.loadProductNameToTextView(cartItem.item.id_product, binding.textViewProductName)
-            repository.loadImageToView(cartItem.item.id_image, binding.imageViewProduct)
+            loadProductNameToTextView(repository, cartItem.item.id_product)
+            loadImageToView(repository, cartItem.item.id_image)
             binding.buttonRemoveCartItem.setOnClickListener {
                 clickListener.onRemoveClickListener(cartItem.item)
             }
+        }
+
+        private fun loadImageToView(repository: CartRepository, imageID: Int) {
+            repository.getImage(imageID).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val images = snapshot.getDataValue(Image::class.java)
+
+                    if (images.isNotEmpty()) {
+                        repository.getProductImageFromFirebase(images.first().link).addOnSuccessListener { uri ->
+                            Picasso.get().load(uri).into(binding.imageViewProduct)
+                        }
+                        return
+                    }
+                    Log.e(CartItemAdapter.TAG, "image is empty")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(CartItemAdapter.TAG,"Error: $error")
+                }
+
+            })
+        }
+
+        private fun loadProductNameToTextView(repository: CartRepository, productID: Int) {
+            repository.getProduct(productID).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val products = snapshot.getDataValue(Product::class.java)
+
+                    if (products.isNotEmpty()) {
+                        binding.textViewProductName.text = products.first().name
+                        return
+                    }
+                    Log.e(CartItemAdapter.TAG, "Product is empty")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(CartItemAdapter.TAG, "Error: $error")
+                }
+
+            })
         }
     }
 

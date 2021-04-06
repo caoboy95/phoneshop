@@ -9,7 +9,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.bill.CheckBillFragment"
+    tools:context=".ui.bill.view.CheckBillFragment"
     android:orientation="vertical">
 
     <RelativeLayout

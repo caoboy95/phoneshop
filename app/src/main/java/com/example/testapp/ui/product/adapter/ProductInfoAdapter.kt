@@ -11,6 +11,7 @@ import com.example.testapp.data.db.entities.ProductVariant
 import com.example.testapp.data.db.entities.ProductVariantWithImage
 import com.example.testapp.databinding.ProductVariantItemAdapterBinding
 import com.example.testapp.ui.formatCurrency
+import com.example.testapp.ui.getResColor
 
 class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHolder>() {
 
@@ -32,7 +33,7 @@ class ProductInfoAdapter : RecyclerView.Adapter<ProductInfoAdapter.ProductInfoHo
         fun bind(productVariant: ProductVariant, clickListener: ClickListener, promotionPrice: Int) {
             val version = "${productVariant.version} - ${productVariant.color}"
             if(productVariant.quantity == 0) {
-                binding.rootLayout.setCardBackgroundColor(ContextCompat.getColor(context, R.color.out_of_stock))
+                binding.rootLayout.setCardBackgroundColor(context.getResColor(R.color.out_of_stock))
                 binding.rootLayout.isEnabled= false
             }
             val price = formatCurrency((productVariant.unit_price *(100 - promotionPrice) / 100))

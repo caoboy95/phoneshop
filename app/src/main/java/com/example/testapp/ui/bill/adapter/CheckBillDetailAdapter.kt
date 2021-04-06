@@ -1,18 +1,13 @@
-package com.example.testapp.ui.bill.detail
+package com.example.testapp.ui.bill.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.Constant
 import com.example.testapp.data.db.entities.BillDetailsInfo
 import com.example.testapp.data.repository.CheckBillDetailRepository
-import com.example.testapp.databinding.CheckBillDetailFragmentBinding
 import com.example.testapp.databinding.CheckBillDetailItemAdapterBinding
 import com.example.testapp.ui.formatCurrency
 import com.squareup.picasso.Picasso
-import java.text.NumberFormat
-import java.util.*
 
 class CheckBillDetailAdapter(val repository: CheckBillDetailRepository) : RecyclerView.Adapter<CheckBillDetailAdapter.CheckBillDetailHolder>() {
 

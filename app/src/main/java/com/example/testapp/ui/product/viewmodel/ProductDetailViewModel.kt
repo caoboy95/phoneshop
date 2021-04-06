@@ -1,5 +1,6 @@
 package com.example.testapp.ui.product.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import com.example.testapp.data.response.ProductDetailResponse
 import com.example.testapp.data.response.ProductResponse
 import com.example.testapp.data.response.ProductVariantResponse
 import com.example.testapp.ui.base.BaseViewModel
+import com.example.testapp.ui.getDataValue
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -58,21 +60,23 @@ class ProductDetailViewModel(
     private fun getProductVariantsFromFirebase(productID: Int) {
         repository.getProductVariantsFromFirebase(productID).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val productVariants = mutableListOf<ProductVariant>()
-                if (snapshot.exists()) {
-                    snapshot.children.forEach {
-                        it.getValue(ProductVariant::class.java)?.let { productVariant ->
-                            productVariants.add(productVariant)
-                        }
-                    }
+                val productVariants = snapshot.getDataValue(ProductVariant::class.java)
+
+                if (productVariants.isNotEmpty()) {
+                    _productVariantsFB.value = productVariants
+                    return
                 }
-                _productVariantsFB.value = productVariants
+                Log.e(TAG, "Product variants is empty")
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e(TAG, "Error: $error")
             }
 
         })
+    }
+
+    companion object {
+        private const val TAG = "ProductDetailVM"
     }
 }

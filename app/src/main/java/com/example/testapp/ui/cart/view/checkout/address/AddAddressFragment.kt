@@ -1,4 +1,4 @@
-package com.example.testapp.ui.cart.checkout.address
+package com.example.testapp.ui.cart.view.checkout.address
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddAddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.cart.viewmodel.AddressViewModel
 import com.example.testapp.ui.snackbar
 
 

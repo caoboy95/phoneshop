@@ -50,9 +50,7 @@ fun Fragment.handleApiError(
     when {
         failure.isNetworkError -> requireView().snackbar("Please check your internet connection",retry)
         failure.errorCode == 404 -> {
-
                 requireView().snackbar("There isn't Api")
-
         }
         else -> {
             requireView().snackbar(failure.message as String)
@@ -66,7 +64,7 @@ fun Context.getResColor(colorID: Int) : Int {
 
 fun View.snackbar(message: String, action: (() -> Unit)? = null) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).apply {
-        setBackgroundTint(this.view?.context.getResColor(R.color.colorPrimary))
+        setBackgroundTint(this.view.context.getResColor(R.color.colorPrimary))
         action?.let {
             setAction("Retry") {
                 action()

@@ -6,7 +6,6 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 

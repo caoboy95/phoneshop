@@ -9,9 +9,9 @@ data class CartItem (
         var quantity: Int,
         var price: Long,
         var totalPriceItem: Long
-):Parcelable
+): Parcelable
 
 @Parcelize
 data class CartItems (
         var cartItems: MutableList<CartItem>
-):Parcelable
+): Parcelable

@@ -1,20 +1,18 @@
-package com.example.testapp.ui.cart.checkout.address
+package com.example.testapp.ui.cart.view.checkout.address
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.R
 import com.example.testapp.data.db.entities.AddressCustomer
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.cart.adapter.AddressInfoAdapter
+import com.example.testapp.ui.cart.viewmodel.AddressViewModel
 
 class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,AddressRepository>() {
 

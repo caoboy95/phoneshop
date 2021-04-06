@@ -1,4 +1,4 @@
-package com.example.testapp.ui.bill.detail
+package com.example.testapp.ui.bill.view.detail
 
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +16,8 @@ import com.example.testapp.data.repository.CheckBillDetailRepository
 import com.example.testapp.data.response.BillDetailResponse
 import com.example.testapp.databinding.CheckBillDetailFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.bill.adapter.CheckBillDetailAdapter
+import com.example.testapp.ui.bill.viewmodel.CheckBillDetailViewModel
 import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.visible
 

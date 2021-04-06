@@ -1,4 +1,4 @@
-package com.example.testapp.ui.cart
+package com.example.testapp.ui.cart.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,11 +16,12 @@ import com.example.testapp.data.network.ProductApi
 import com.example.testapp.data.repository.CartRepository
 import com.example.testapp.databinding.CartFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.cart.adapter.CartViewAdapter
+import com.example.testapp.ui.cart.viewmodel.CartViewModel
 import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 import kotlinx.coroutines.launch
-import java.util.*
 
 class CartFragment : BaseFragment<CartViewModel, CartFragmentBinding, CartRepository>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

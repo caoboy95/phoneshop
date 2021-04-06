@@ -62,53 +62,8 @@ class CartRepository(
     }
 
     //Firebase Database
-    fun loadImageToView(imageID: Int, imageView: ImageView) {
-        firebaseDatabase.getReference(NODE_IMAGES)
-                .orderByChild("id")
-                .equalTo(imageID.toDouble())
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            snapshot.children.forEach {
-                                it.getValue(Image::class.java)?.let { image ->
-                                    getProductImageFromFirebase(image.link).addOnSuccessListener { uri ->
-                                        Picasso.get().load(uri).into(imageView)
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.e(TAG,"Error: $error")
-                    }
-
-                })
-    }
-
-    fun loadProductNameToTextView(productID: Int, textView: TextView) {
-        getProductFromFirebase(productID).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.exists()) {
-                        snapshot.children.forEach {
-                            it.getValue(Product::class.java)?.let { product ->
-                                textView.text = product.name
-                            }
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(TAG,"Error: $error")
-            }
-
-        })
-    }
-
-    private fun getProductFromFirebase(productID: Int) =
-            firebaseDatabase.getReference(NODE_PRODUCTS).orderByChild("id").equalTo(productID.toDouble())
+    fun getImage(imageID: Int) =
+            firebaseDatabase.getReference(NODE_IMAGES).orderByChild("id").equalTo(imageID.toDouble())
 
     private fun getProductVariant() = firebaseDatabase.getReference(NODE_PRODUCT_VARIANTS)
 
@@ -120,7 +75,7 @@ class CartRepository(
 
     fun getBillDetails() = firebaseDatabase.getReference(Constant.NODE_BILL_DETAILS).orderByChild("id")
 
-    fun getProduct(productID: Int) = getProductFromFirebase(productID)
+    fun getProduct(productID: Int) = firebaseDatabase.getReference(NODE_PRODUCTS).orderByChild("id").equalTo(productID.toDouble())
 
     companion object {
         private const val DELETED = "Đã Xóa"

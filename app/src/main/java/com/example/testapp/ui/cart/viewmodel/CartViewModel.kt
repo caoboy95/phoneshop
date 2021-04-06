@@ -1,4 +1,4 @@
-package com.example.testapp.ui.cart
+package com.example.testapp.ui.cart.viewmodel
 
 import android.widget.ImageView
 import androidx.lifecycle.LiveData
@@ -25,7 +25,7 @@ class CartViewModel(
 ) : BaseViewModel(repository) {
     private val _cart : MutableLiveData<Cart> = MutableLiveData()
     val cart: LiveData<Cart>
-        get()= _cart
+        get() = _cart
 
     init {
         getCartFromDatabase()

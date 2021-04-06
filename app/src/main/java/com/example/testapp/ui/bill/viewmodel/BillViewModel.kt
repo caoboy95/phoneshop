@@ -1,4 +1,4 @@
-package com.example.testapp.ui.bill
+package com.example.testapp.ui.bill.viewmodel
 
 import com.example.testapp.data.repository.BillRepository
 import com.example.testapp.ui.base.BaseViewModel

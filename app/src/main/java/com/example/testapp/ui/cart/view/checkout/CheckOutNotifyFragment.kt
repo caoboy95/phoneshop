@@ -1,25 +1,22 @@
-package com.example.testapp.ui.cart.checkout
+package com.example.testapp.ui.cart.view.checkout
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.testapp.R
 import com.example.testapp.data.db.entities.CartAndAddress
 import com.example.testapp.data.db.entities.CartItem
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.network.ProductApi
 import com.example.testapp.data.repository.CartRepository
-import com.example.testapp.data.repository.CheckOutRepository
 import com.example.testapp.databinding.FragmentCheckOutNotifyBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.cart.adapter.CartItemAdapter
+import com.example.testapp.ui.cart.viewmodel.CheckOutViewModel
 import com.example.testapp.ui.formatCurrency
-import java.text.NumberFormat
-import java.util.*
 
 
 class CheckOutNotifyFragment : BaseFragment<CheckOutViewModel, FragmentCheckOutNotifyBinding, CartRepository>() {

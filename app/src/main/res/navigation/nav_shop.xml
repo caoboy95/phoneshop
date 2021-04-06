@@ -36,7 +36,7 @@
         android:label="Trang Cá Nhân" />
     <fragment
         android:id="@+id/billFragment"
-        android:name="com.example.testapp.ui.bill.BillFragment"
+        android:name="com.example.testapp.ui.bill.view.BillFragment"
         android:label="Lịch Sử Đơn Hàng"
         tools:layout="@layout/fragment_bill" >
         <action
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.example.testapp.ui.cart.CartFragment"
+        android:name="com.example.testapp.ui.cart.view.CartFragment"
         android:label="Giỏ Hàng" >
         <action
             android:id="@+id/action_cartFragment_to_checkOutFragment"
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkOutFragment"
-        android:name="com.example.testapp.ui.cart.checkout.CheckOutFragment"
+        android:name="com.example.testapp.ui.cart.view.checkout.CheckOutFragment"
         android:label="Đặt Hàng" >
         <action
             android:id="@+id/action_checkOutFragment_to_addressFragment"
@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.example.testapp.ui.cart.checkout.address.AddressFragment"
+        android:name="com.example.testapp.ui.cart.view.checkout.address.AddressFragment"
         android:label="Thông Tin Giao Hàng" >
         <action
             android:id="@+id/action_addressFragment_to_addAddressFragment"
@@ -112,11 +112,11 @@
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
-        android:name="com.example.testapp.ui.cart.checkout.address.AddAddressFragment"
+        android:name="com.example.testapp.ui.cart.view.checkout.address.AddAddressFragment"
         android:label="Thêm Địa Chỉ" />
     <fragment
         android:id="@+id/editAddressFragment"
-        android:name="com.example.testapp.ui.cart.checkout.address.EditAddressFragment"
+        android:name="com.example.testapp.ui.cart.view.checkout.address.EditAddressFragment"
         android:label="Sửa Địa Chỉ" >
         <argument
             android:name="id"
@@ -124,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkOutNotifyFragment"
-        android:name="com.example.testapp.ui.cart.checkout.CheckOutNotifyFragment"
+        android:name="com.example.testapp.ui.cart.view.checkout.CheckOutNotifyFragment"
         android:label="Đơn Hàng Đã Được Đặt" >
         <argument
             android:name="idBill"
@@ -135,7 +135,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkBillFragment"
-        android:name="com.example.testapp.ui.bill.CheckBillFragment"
+        android:name="com.example.testapp.ui.bill.view.CheckBillFragment"
         android:label="Thông Tin Đơn Hàng" >
         <argument
             android:name="phone"
@@ -152,7 +152,7 @@
     </fragment>
     <fragment
         android:id="@+id/checkBillDetailFragment"
-        android:name="com.example.testapp.ui.bill.detail.CheckBillDetailFragment"
+        android:name="com.example.testapp.ui.bill.view.detail.CheckBillDetailFragment"
         android:label="Chi Tiết Đơn Hàng" >
         <argument
             android:name="bill"

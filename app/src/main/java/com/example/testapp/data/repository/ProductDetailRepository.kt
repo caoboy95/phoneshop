@@ -33,13 +33,11 @@ class ProductDetailRepository(
     suspend fun addToCart(productVariant: ProductVariant, promotionPrice: Int) :String {
         return withContext(Dispatchers.IO) {
             try {
-                Log.e("productdetailrepo", "${db.getCartDao().getCart()}")
                 if(productVariant.quantity != 0) {
-                    if (db.getCartDao().getCart() != null) {
-                        cart = db.getCartDao().getCart()
-
+                    cart = if (db.getCartDao().getCart() != null) {
+                        db.getCartDao().getCart()
                     } else {
-                        cart = Cart(0, null, 0, 0)
+                        Cart(0, null, 0, 0)
                     }
                     cart.addToCart(productVariant, promotionPrice, 1)
                     db.getCartDao().insertCart(cart)
@@ -59,5 +57,6 @@ class ProductDetailRepository(
     companion object {
         private const val ADDED_CART = "Đã Thêm Vào Giỏ Hàng"
         private const val OUT_OF_STOCK = "Sản Phẩm Đã Hết Hàng"
+        private const val TAG = "ProductDetailRepo"
     }
 }

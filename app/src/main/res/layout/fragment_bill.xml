@@ -5,7 +5,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.testapp.ui.bill.BillFragment"
+    tools:context="com.example.testapp.ui.bill.view.BillFragment"
     android:clickable="true"
     android:focusableInTouchMode="true"
     android:focusable="true">

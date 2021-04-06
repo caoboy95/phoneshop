@@ -15,7 +15,7 @@ import okhttp3.internal.notify
 
 class ProductViewModel(
     private val repository: ProductRepository
-):BaseViewModel(repository) {
+): BaseViewModel(repository) {
     //Room
     val productFromRoom by lazyDeferred {
         repository.getProductFromRoom()
@@ -59,9 +59,13 @@ class ProductViewModel(
         repository.getProductsFromFirebase().addValueEventListener(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    _products.value = snapshot.getDataValue(Product::class.java)
+                val products = snapshot.getDataValue(Product::class.java)
+
+                if (products.isNotEmpty()) {
+                    _products.value = products
+                    return
                 }
+                Log.e(TAG, "Products is empty")
             }
 
             override fun onCancelled(error: DatabaseError) {

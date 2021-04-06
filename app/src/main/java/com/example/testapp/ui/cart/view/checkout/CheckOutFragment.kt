@@ -1,4 +1,4 @@
-package com.example.testapp.ui.cart.checkout
+package com.example.testapp.ui.cart.view.checkout
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -19,6 +19,8 @@ import com.example.testapp.data.repository.CartRepository
 import com.example.testapp.databinding.AlertCheckoutLayoutBinding
 import com.example.testapp.databinding.CheckOutFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
+import com.example.testapp.ui.cart.adapter.CartItemAdapter
+import com.example.testapp.ui.cart.viewmodel.CheckOutViewModel
 import com.example.testapp.ui.formatCurrency
 import com.example.testapp.ui.getDataValue
 import com.example.testapp.ui.snackbar
@@ -37,6 +39,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar.bringToFront()
         viewModel.getSelectedAddress()
         viewModel.cart.observe(viewLifecycleOwner, Observer CartObserve@{ cart ->
             viewModel.address.observe(viewLifecycleOwner, Observer AddressObserve@{ address ->
@@ -145,6 +148,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
             adapter = mAdapter
         }
     }
+
     //Checkout for Firebase database
     private fun checkOut(cart: Cart, address: AddressCustomer) {
         viewModel.getCustomers().addListenerForSingleValueEvent(object : ValueEventListener {
@@ -160,8 +164,9 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
 
                         viewModel.getProductVariants().addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshotProductVariant: DataSnapshot) {
-                                if (snapshotProductVariant.exists()) {
-                                    val productVariants = snapshotProductVariant.getDataValue(ProductVariant::class.java)
+                                val productVariants = snapshotProductVariant.getDataValue(ProductVariant::class.java)
+
+                                if (productVariants.isNotEmpty()) {
                                     cart.items?.cartItems?.forEach { cartItem ->
                                         productVariants.find { it.id == cartItem.item.id }?.let {
                                             if ((it.quantity - cartItem.quantity) < 0) {
@@ -185,10 +190,14 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
                                     viewModel.getBillDetails().addListenerForSingleValueEvent(object : ValueEventListener {
                                         override fun onDataChange(snapshotBillDetail: DataSnapshot) {
                                             if (snapshotBillDetail.exists()) {
+                                                val billDetails = snapshotBillDetail.getDataValue(BillDetail::class.java)
+                                                var billDetailID = checkBillDetailID(billDetails, billDetails.size)
+
                                                 if (!customers.contains(customer)) {
                                                     snapshotCustomer.ref.child(customer.id.toString()).setValue(customer)
                                                 }
                                                 snapshotBill.ref.child(bill.id.toString()).setValue(bill)
+
                                                 snapshotProductVariant.children.forEach { dataSnapshot ->
                                                     dataSnapshot.getValue(ProductVariant::class.java)?.let { productVariant ->
                                                         cart.items?.cartItems?.find { it.item.id == productVariant.id }?.let {
@@ -196,14 +205,14 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
                                                         }
                                                     }
                                                 }
-                                                val billDetails = snapshotBillDetail.getDataValue(BillDetail::class.java)
-                                                var billDetailID = checkBillDetailID(billDetails, billDetails.size)
+
                                                 cart.items?.cartItems?.forEach { cartItem ->
                                                     val billDetail = BillDetail(time, billDetailID, bill.id, cartItem.item.id,
                                                             cartItem.quantity, cartItem.price, time)
                                                     snapshotBillDetail.ref.child(billDetail.id.toString()).setValue(billDetail)
                                                     billDetailID++
                                                 }
+
                                                 this@CheckOutFragment.view?.snackbar(NOTIFY_SUCCESS)
                                                 binding.progressBar.visible(false)
                                                 viewModel.removeCart(cart)
