@@ -92,26 +92,6 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
             setPositiveButton("OK") { _, _ ->
                 binding.progressBar.visible(true)
                 checkOut(cart, address)
-                //Rest API
-//                lifecycleScope.launch {
-//                    viewModel.checkOutAsync(CartAndAddress(cart, address)).await().also {
-//                        when (it) {
-//                            is Resource.Success -> {
-//                                if (it.value.isSuccessful) {
-//                                    this@CheckOutFragment.view?.snackbar(it.value.checkOutMessage)
-//                                    viewModel.removeCart(cart)
-//                                    val action = CheckOutFragmentDirections.actionCheckOutFragmentToCheckOutNotifyFragment(it.value.idBill, CartAndAddress(cart, address))
-//                                    this@CheckOutFragment.findNavController().navigate(action)
-//                                } else {
-//                                    this@CheckOutFragment.view?.snackbar(it.value.checkOutMessage)
-//                                    this@CheckOutFragment.view?.findNavController()?.navigateUp()
-//                                }
-//                            }
-//                            is Resource.Failure -> this@CheckOutFragment.view?.snackbar(it.message.toString())
-//                        }
-//                    }
-//                }
-
             }
             setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
