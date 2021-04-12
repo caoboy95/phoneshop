@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.testapp.R
@@ -75,4 +76,10 @@ fun View.snackbar(message: String, action: (() -> Unit)? = null) {
             dismiss()
         }
     }.show()
+}
+
+fun hideKeyboard(view: View, context: Context) {
+    val inputMethodManager =
+            ContextCompat.getSystemService(context, InputMethodManager::class.java)
+    inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
 }

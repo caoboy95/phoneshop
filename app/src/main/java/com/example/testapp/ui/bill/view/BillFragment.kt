@@ -16,6 +16,7 @@ import com.example.testapp.databinding.FragmentBillBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.bill.viewmodel.BillViewModel
 import com.example.testapp.ui.getDataValue
+import com.example.testapp.ui.hideKeyboard
 import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 import com.google.firebase.database.DataSnapshot
@@ -30,7 +31,7 @@ class BillFragment : BaseFragment<BillViewModel, FragmentBillBinding, BillReposi
         binding.progressBar.bringToFront()
         binding.buttonCheckBill.setOnClickListener {
             it?.let {
-                hideKeyboard(it)
+                hideKeyboard(it, this@BillFragment.requireContext())
             }
             binding.progressBar.visible(true)
             viewModel.getCustomer(binding.editTextCheckBillPhone.text.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -54,21 +55,18 @@ class BillFragment : BaseFragment<BillViewModel, FragmentBillBinding, BillReposi
                 }
             })
         }
-        binding.editTextCheckBillPhone.setOnFocusChangeListener(object : View.OnFocusChangeListener {
-            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-                if (!hasFocus) {
-                    v?.let {
-                        hideKeyboard(v)
-                    }
-                }
-            }
-        })
+        setFocusEditText()
     }
 
-    fun hideKeyboard(view: View) {
-        val inputMethodManager =
-            ContextCompat.getSystemService(this.requireContext(), InputMethodManager::class.java)
-        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
+    private fun setFocusEditText() {
+        val focusListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                v?.let {
+                    hideKeyboard(v, this.requireContext())
+                }
+            }
+        }
+        binding.editTextCheckBillPhone.onFocusChangeListener = focusListener
     }
 
     override fun getFragmentBinding(

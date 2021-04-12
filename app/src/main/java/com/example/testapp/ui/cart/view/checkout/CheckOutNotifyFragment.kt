@@ -58,5 +58,5 @@ class CheckOutNotifyFragment : BaseFragment<CheckOutViewModel, FragmentCheckOutN
     override fun getViewModel() = CheckOutViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): CartRepository =
-        CartRepository(db, remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor))
+        CartRepository(appDatabase, remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor))
 }

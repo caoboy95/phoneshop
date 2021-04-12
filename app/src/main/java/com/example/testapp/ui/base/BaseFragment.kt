@@ -13,11 +13,8 @@ import com.example.testapp.data.network.RemoteDataSource
 import com.example.testapp.data.repository.BaseRepository
 import com.jakewharton.threetenabp.AndroidThreeTen
 import net.simplifiedcoding.mvvmsampleapp.data.preferences.PreferenceProvider
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
-import org.kodein.di.generic.instance
 
-abstract class BaseFragment<VM:BaseViewModel,B: ViewDataBinding,R:BaseRepository> : Fragment() {
+abstract class BaseFragment<VM:BaseViewModel, B: ViewDataBinding, R:BaseRepository> : Fragment() {
     //instance of viewmodel
     protected lateinit var viewModel: VM
     //instance of
@@ -27,24 +24,25 @@ abstract class BaseFragment<VM:BaseViewModel,B: ViewDataBinding,R:BaseRepository
 
     protected lateinit var prefs: PreferenceProvider
 
-    protected lateinit var db: AppDatabase
+    protected lateinit var appDatabase: AppDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        db= AppDatabase.invoke(requireContext())
+        appDatabase = AppDatabase.invoke(requireContext())
         prefs = PreferenceProvider(requireContext())
         binding = getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository(NetworkConnectionInterceptor(requireContext())))
-        viewModel=ViewModelProvider(this, factory).get(getViewModel())
+        viewModel = ViewModelProvider(this, factory).get(getViewModel())
         AndroidThreeTen.init(requireContext())
         return binding.root
     }
 
-    abstract fun getFragmentBinding(inflater: LayoutInflater,container: ViewGroup?): B
-    abstract fun getViewModel(): Class<VM>
-    abstract fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor): R
+    abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
 
+    abstract fun getViewModel(): Class<VM>
+
+    abstract fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor): R
 }

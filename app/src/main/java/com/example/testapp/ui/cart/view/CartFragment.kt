@@ -79,5 +79,5 @@ class CartFragment : BaseFragment<CartViewModel, CartFragmentBinding, CartReposi
     override fun getViewModel() = CartViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor) =
-            CartRepository(db, remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor))
+            CartRepository(appDatabase, remoteDataSource.buildApi(ProductApi::class.java,networkConnectionInterceptor))
 }

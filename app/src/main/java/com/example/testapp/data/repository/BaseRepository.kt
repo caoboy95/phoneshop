@@ -11,7 +11,7 @@ import retrofit2.HttpException
 
 abstract class BaseRepository {
     val firebaseDatabase = FirebaseDatabase.getInstance()
-    val firebaseStorage = FirebaseStorage.getInstance()
+    private val firebaseStorage = FirebaseStorage.getInstance()
 
     fun getProductImageFromFirebase(url: String) =
             firebaseStorage.getReferenceFromUrl(Constant.URL_FIREBASE_STORAGE).child("product/$url").downloadUrl
@@ -63,8 +63,6 @@ abstract class BaseRepository {
 //            }
 //        }
 //    }
-
-
 }
 
 

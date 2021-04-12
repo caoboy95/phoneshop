@@ -10,7 +10,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapp.R
-import com.example.testapp.data.db.entities.Product
 import com.example.testapp.data.network.NetworkConnectionInterceptor
 import com.example.testapp.data.network.ProductApi
 import com.example.testapp.data.repository.ProductRepository
@@ -124,5 +123,5 @@ class ProductFragment : BaseFragment<ProductViewModel, FragmentProductBinding, P
     override fun getViewModel() = ProductViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor) =
-            ProductRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), db, prefs)
+            ProductRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), appDatabase, prefs)
 }

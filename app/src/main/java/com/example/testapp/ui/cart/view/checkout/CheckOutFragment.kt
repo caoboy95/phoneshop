@@ -41,17 +41,17 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
         super.onViewCreated(view, savedInstanceState)
         binding.progressBar.bringToFront()
         viewModel.getSelectedAddress()
+        viewModel.address.observe(viewLifecycleOwner, Observer AddressObserve@{ address ->
+            this.address = address
+            address?.let {
+                updateAddressUI(it)
+                return@AddressObserve
+            }
+            binding.addressInfo.visible(false)
+            binding.textViewRequiredAddress.visible(true)
+            this.view?.snackbar(NOTIFY_REQUIRED_ADDRESS)
+        })
         viewModel.cart.observe(viewLifecycleOwner, Observer CartObserve@{ cart ->
-            viewModel.address.observe(viewLifecycleOwner, Observer AddressObserve@{ address ->
-                this.address = address
-                address?.let {
-                    updateAddressUI(it)
-                    return@AddressObserve
-                }
-                binding.addressInfo.visible(false)
-                binding.textViewRequiredAddress.visible(true)
-                this.view?.snackbar(NOTIFY_REQUIRED_ADDRESS)
-            })
             cart?.let {
                 updateUI(it)
                 return@CartObserve
@@ -308,7 +308,7 @@ class CheckOutFragment : BaseFragment<CheckOutViewModel, CheckOutFragmentBinding
     override fun getViewModel() = CheckOutViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor) =
-            CartRepository(db, remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor))
+            CartRepository(appDatabase, remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor))
 
     companion object {
         private const val TAG = "CheckOutFragment"

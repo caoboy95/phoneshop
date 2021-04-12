@@ -24,7 +24,6 @@ import com.example.testapp.ui.snackbar
 import com.example.testapp.ui.visible
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBinding, ProductDetailRepository>() {
@@ -96,7 +95,7 @@ class DetailFragment : BaseFragment<ProductDetailViewModel, FragmentDetailBindin
     override fun getViewModel() = ProductDetailViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor : NetworkConnectionInterceptor) =
-            ProductDetailRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), db)
+            ProductDetailRepository(remoteDataSource.buildApi(ProductApi::class.java, networkConnectionInterceptor), appDatabase)
 
     companion object {
         private const val TAG = "DetailFragment"

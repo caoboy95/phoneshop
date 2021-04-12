@@ -21,30 +21,28 @@ class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,Add
         setHasOptionsMenu(true)
         viewModel.getAddress()
         viewModel.address.observe(viewLifecycleOwner, Observer {
-            if(it!=null){
-                updateUI(it)
-            }
+            it?.let { updateUI(it) }
         })
     }
 
-    fun updateUI(address: List<AddressCustomer>) {
+    private fun updateUI(address: List<AddressCustomer>) {
         initRecyclerView(address)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.edit_address_menu,menu)
+        inflater.inflate(R.menu.edit_address_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when(item.itemId) {
             R.id.menu_item_add_address -> this.view?.findNavController()?.navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment())
         }
         return super.onOptionsItemSelected(item)
     }
 
     fun initRecyclerView(address: List<AddressCustomer>) {
-        var mAdapter = AddressInfoAdapter()
+        val mAdapter = AddressInfoAdapter()
         mAdapter.setData(address)
         mAdapter.setOnClickListener(object : AddressInfoAdapter.AddressClickListener {
             override fun onEditClickListener(id: Int) {
@@ -61,9 +59,9 @@ class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,Add
             }
         })
         binding.recyclerViewAddresses.apply {
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
-            adapter=mAdapter
+            adapter = mAdapter
         }
     }
 
@@ -76,6 +74,6 @@ class AddressFragment : BaseFragment<AddressViewModel,AddressFragmentBinding,Add
     override fun getViewModel() = AddressViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): AddressRepository =
-        AddressRepository(db)
+        AddressRepository(appDatabase)
 
 }

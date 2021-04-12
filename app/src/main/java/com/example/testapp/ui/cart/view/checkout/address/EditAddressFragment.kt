@@ -15,11 +15,12 @@ import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddAddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.cart.viewmodel.AddressViewModel
+import com.example.testapp.ui.hideKeyboard
 import kotlinx.coroutines.launch
 
 class EditAddressFragment : BaseFragment<AddressViewModel, AddAddressFragmentBinding, AddressRepository>() {
 
-    val safeArgs: EditAddressFragmentArgs by navArgs()
+    private val safeArgs: EditAddressFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,12 +31,12 @@ class EditAddressFragment : BaseFragment<AddressViewModel, AddAddressFragmentBin
                 binding.editTextCustomerAddress.setText(it.address)
                 binding.editTextCustomerEmail.setText(it.email)
                 binding.editTextCustomerPhone.setText(it.phone)
-                when(it.gender) {
-                    "Nam" -> binding.radioButtonMale.isChecked=true
-                    "Nữ"  -> binding.radioButtonFemale.isChecked = true
+                when (it.gender) {
+                    "Nam" -> binding.radioButtonMale.isChecked = true
+                    "Nữ" -> binding.radioButtonFemale.isChecked = true
                 }
-                binding.buttonSaveAddress.setOnClickListener { v->
-                    val gender = when(binding.radioGroupCustomerGender.checkedRadioButtonId) {
+                binding.buttonSaveAddress.setOnClickListener { v ->
+                    val gender = when (binding.radioGroupCustomerGender.checkedRadioButtonId) {
                         binding.radioButtonMale.id -> "Nam"
                         binding.radioButtonFemale.id -> "Nữ"
                         else -> "Khác"
@@ -53,14 +54,13 @@ class EditAddressFragment : BaseFragment<AddressViewModel, AddAddressFragmentBin
                 }
             }
         }
-
     }
 
     private fun setFocusEditText() {
         val focusListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 v?.let {
-                    hideKeyboard(v)
+                    hideKeyboard(v, this.requireActivity())
                 }
             }
         }
@@ -70,19 +70,13 @@ class EditAddressFragment : BaseFragment<AddressViewModel, AddAddressFragmentBin
         binding.editTextCustomerPhone.onFocusChangeListener = focusListener
     }
 
-    fun hideKeyboard(view: View) {
-        val inputMethodManager =
-                ContextCompat.getSystemService(this.requireContext(), InputMethodManager::class.java)
-        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
     override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
+            inflater: LayoutInflater,
+            container: ViewGroup?
     ): AddAddressFragmentBinding = AddAddressFragmentBinding.inflate(inflater, container, false)
 
     override fun getViewModel() = AddressViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): AddressRepository =
-        AddressRepository(db)
+            AddressRepository(appDatabase)
 }

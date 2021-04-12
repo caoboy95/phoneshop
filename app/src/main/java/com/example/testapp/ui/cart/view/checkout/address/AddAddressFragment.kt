@@ -13,6 +13,7 @@ import com.example.testapp.data.repository.AddressRepository
 import com.example.testapp.databinding.AddAddressFragmentBinding
 import com.example.testapp.ui.base.BaseFragment
 import com.example.testapp.ui.cart.viewmodel.AddressViewModel
+import com.example.testapp.ui.hideKeyboard
 import com.example.testapp.ui.snackbar
 
 
@@ -21,12 +22,12 @@ class AddAddressFragment : BaseFragment<AddressViewModel,AddAddressFragmentBindi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonSaveAddress.setOnClickListener {
-            val gender = when(binding.radioGroupCustomerGender.checkedRadioButtonId)
-            {
-                binding.radioButtonMale.id -> "Nam"
-                binding.radioButtonFemale.id -> "Nữ"
-                else -> "Không"
-            }
+            val gender =
+                when(binding.radioGroupCustomerGender.checkedRadioButtonId) {
+                    binding.radioButtonMale.id -> "Nam"
+                    binding.radioButtonFemale.id -> "Nữ"
+                    else -> "Không"
+                }
             val address = AddressCustomer(0,binding.editTextCustomerName.text.toString(),
                 binding.editTextCustomerEmail.text.toString(),
                 false,
@@ -35,7 +36,7 @@ class AddAddressFragment : BaseFragment<AddressViewModel,AddAddressFragmentBindi
                 gender
             )
             if (address.address.isNullOrBlank() || address.email.isNullOrBlank() || address.name.isNullOrBlank() || address.phone.isNullOrBlank()) {
-                this.view?.snackbar("Giá trị không được để trống")
+                this.view?.snackbar("Thông tin không được để trống")
                 return@setOnClickListener
             }
             viewModel.addAddress(address)
@@ -45,26 +46,18 @@ class AddAddressFragment : BaseFragment<AddressViewModel,AddAddressFragmentBindi
         setFocusEditText()
     }
 
-    fun setFocusEditText() {
-        val focusListener = object : View.OnFocusChangeListener {
-            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-                if (!hasFocus) {
-                    v?.let {
-                        hideKeyboard(v)
-                    }
+    private fun setFocusEditText() {
+        val focusListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                v?.let {
+                    hideKeyboard(v, this.requireContext())
                 }
             }
         }
-        binding.editTextCustomerAddress.setOnFocusChangeListener(focusListener)
-        binding.editTextCustomerEmail.setOnFocusChangeListener(focusListener)
-        binding.editTextCustomerName.setOnFocusChangeListener(focusListener)
-        binding.editTextCustomerPhone.setOnFocusChangeListener(focusListener)
-    }
-
-    fun hideKeyboard(view: View) {
-        val inputMethodManager =
-            ContextCompat.getSystemService(this.requireContext(), InputMethodManager::class.java)
-        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
+        binding.editTextCustomerAddress.onFocusChangeListener = focusListener
+        binding.editTextCustomerEmail.onFocusChangeListener = focusListener
+        binding.editTextCustomerName.onFocusChangeListener = focusListener
+        binding.editTextCustomerPhone.onFocusChangeListener = focusListener
     }
 
     override fun getFragmentBinding(
@@ -72,9 +65,9 @@ class AddAddressFragment : BaseFragment<AddressViewModel,AddAddressFragmentBindi
         container: ViewGroup?
     ): AddAddressFragmentBinding = AddAddressFragmentBinding.inflate(inflater,container,false)
 
-    override fun getViewModel()= AddressViewModel::class.java
+    override fun getViewModel() = AddressViewModel::class.java
 
     override fun getFragmentRepository(networkConnectionInterceptor: NetworkConnectionInterceptor): AddressRepository =
-        AddressRepository(db)
+        AddressRepository(appDatabase)
 
 }

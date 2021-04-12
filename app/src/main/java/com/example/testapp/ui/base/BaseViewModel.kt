@@ -6,5 +6,4 @@ import com.example.testapp.data.repository.BaseRepository
 abstract class BaseViewModel(
     private val repository: BaseRepository
 ): ViewModel() {
-
 }
